@@ -9,4 +9,3 @@ function createNew10x10() {
 		}
 	}
 }
-createNew10x10()
