@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="./js/app.js"></script>
+		<style>
+			table, th {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+</style>
+	</head>
+	<body onload="createNew10x10()">
+		<table id="table1" style="">
+			<tr>
+				<th></th>
+				<th><span style="writing-mode: vertical-rl;">Column 1</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 2</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 3</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 4</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 5</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 6</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 7</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 8</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 9</span></th>
+				<th><span style="writing-mode: vertical-rl;">Column 10</span></th>
+			</tr>
+			<tr>
+				<th>Row 1</th>
+				<td id="T1R1C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R1C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 2</th>
+				<td id="T1R2C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R2C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 3</th>
+				<td id="T1R3C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R3C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 4</th>
+				<td id="T1R4C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R4C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 5</th>
+				<td id="T1R5C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R5C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 6</th>
+				<td id="T1R6C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R6C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 7</th>
+				<td id="T1R7C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R7C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 8</th>
+				<td id="T1R8C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R8C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 9</th>
+				<td id="T1R9C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R9C10" style="" onclick="swapBColour()"></td>
+			</tr>
+			<tr>
+				<th>Row 10</th>
+				<td id="T1R10C1" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C2" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C3" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C4" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C5" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C6" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C7" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C8" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C9" style="" onclick="swapBColour()"></td>
+				<td id="T1R10C10" style="" onclick="swapBColour()"></td>
+			</tr>
+		</table>
+	</body>
+</html>
