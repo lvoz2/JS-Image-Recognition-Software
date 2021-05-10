@@ -9,3 +9,12 @@ function createNew10x10() {
 		}
 	}
 }
+function swapBColour(id) {
+	var color = document.getElementById(id).attributes[1].value;
+	if ((color === "background-color: #FFFFFF") || (color === "")) {
+		document.getElementById(id).attributes[1].value = "background-color: #000000";
+	}
+	if (color === "background-color: #000000") {
+		document.getElementById(id).attributes[1].value = "background-color: #FFFFFF";
+	}
+}
