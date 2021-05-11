@@ -22,10 +22,13 @@ function swapBColour(id) {
 	}
 }
 function idofui() {
-	var row;
-	var column;
+	window.row = 0;
+	window.column = 0;
+	var id1 = "T1R1C1";
 	for (row = 0; row <= 9; row++) {
-		var id1 = "T1R" + row + "C" + (column + 1);
+		if (row != 0) {
+			var id1 = "T1R" + row + "C" + (column + 1);
+		}
 		c = document.getElementById(id1).attributes[1].value;
 		for (column = 0; column <= 9; column++) {
 			var id2 = "T1R" + (row + 1) + "C" + (column + 1);
