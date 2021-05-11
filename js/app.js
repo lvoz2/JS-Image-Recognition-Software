@@ -18,3 +18,6 @@ function swapBColour(id) {
 		document.getElementById(id).attributes[1].value = "background-color: #FFFFFF";
 	}
 }
+function idofui() {
+	var a, b, c;
+}
