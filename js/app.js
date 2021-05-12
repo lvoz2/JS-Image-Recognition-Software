@@ -32,7 +32,9 @@ function idofui() {
 		c = document.getElementById(id1).attributes[1].value;
 		for (column = 0; column <= 9; column++) {
 			var id2 = "T1R" + (row + 1) + "C" + (column + 1);
-			b = a;
+			if (a) {
+				b = a;
+			}
 			a = document.getElementById(id2).attributes[1].value;
 		}
 	}
