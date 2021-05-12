@@ -29,6 +29,9 @@ function idofui() {
 		if (row != 0) {
 			id1 = "T1R" + row + "C" + (column + 1);
 		}
+		if (id1 == "T1R" + row + "C11") {
+			id1 = "T1R" + row + "C" + column
+		}
 		c = document.getElementById(id1).attributes[1].value;
 		for (column = 0; column <= 9; column++) {
 			var id2 = "T1R" + (row + 1) + "C" + (column + 1);
