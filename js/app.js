@@ -1,5 +1,5 @@
 window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
-window.a;
+window.a = " ";
 window.b;
 window.c;
 function createNew10x10() {
@@ -35,7 +35,7 @@ function idofui() {
 		c = document.getElementById(id1).attributes[1].value;
 		for (column = 0; column <= 9; column++) {
 			var id2 = "T1R" + (row + 1) + "C" + (column + 1);
-			if (a) {
+			if (a != " ") {
 				b = a;
 			}
 			a = document.getElementById(id2).attributes[1].value;
