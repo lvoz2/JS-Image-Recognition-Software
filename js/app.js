@@ -1,7 +1,7 @@
 window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
 window.a;
-window.y = [""];
-window.x = [""];
+window.y = [];
+window.x = [];
 function createNew10x10() {
 	var row;
 	var column;
@@ -22,6 +22,8 @@ function swapBColour(id) {
 	}
 }
 function idofui() {
+	x = [];
+	y = [];
 	window.row = 0;
 	window.column = 0;
 	for (row = 0; row <= 9; row++) {
