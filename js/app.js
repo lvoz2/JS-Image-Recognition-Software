@@ -1,7 +1,7 @@
 window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
 window.a;
-window.y;
-window.x;
+window.y = [""];
+window.x = [""];
 function createNew10x10() {
 	var row;
 	var column;
@@ -29,6 +29,8 @@ function idofui() {
 			var id = "T1R" + (row + 1) + "C" + (column + 1);
 			a = document.getElementById(id).attributes[1].value;
 			if (a === "background-color: #000000") {
+				x.push(column + 1);
+				y.push(row + 1);
 			}
 		}
 	}
