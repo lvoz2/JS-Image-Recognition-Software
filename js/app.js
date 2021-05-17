@@ -1,12 +1,12 @@
 window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
 window.a;
+window.count = 0;
 window.targetx = 0;
 window.targety = 0;
 window.y = [];
 window.x = [];
 window.tlx = [];
 window.tly = [];
-window.count = 0;
 window.outputx = [];
 window.outputy = [];
 window.zerox = [0,+1,+2,0,+2,0,+2,0,+1,+2];
@@ -73,211 +73,271 @@ function idofui() {
 	tly.push(y[0]);
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + zerox[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 0;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + zeroy[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 0;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + onex[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 1;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + oney[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 1;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + twox[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 2;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + twoy[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 2;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + threex[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 3;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + threey[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 3;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + fourx[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 4;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + foury[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 4;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + fivex[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 5;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + fivey[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 5;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + sixx[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 6;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + sixy[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 6;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + sevenx[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 7;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + seveny[i])
-		if (outputy === y) {
+		for (var h = 0; h < y.length; h++) {
+			if (outputy[h] === y[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			targety = 7;
 		}
-		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
-				count++
-			}
-		}
-		if (count == y.length) {
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + eightx[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 8;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + eighty[i])
-		if (outputy === y) {
-			targety = 8;
-		}
 		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
+			if (outputy[h] === y[h]) {
 				count++
 			}
 		}
 		if (count == y.length) {
+			targety = 8;
+		}
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
-	count = 0;
 	for (var i = 0; i < y.length; i++) {
+		count = 0;
 		outputx.push(parseInt(tlx[0]) + ninex[i])
-		if (outputx === x) {
+		for (var h = 0; h < x.length; h++) {
+			if (outputx[h] === x[h]) {
+				count++
+			}
+		}
+		if (count == x.length) {
 			targetx = 9;
 		}
+		count = 0;
 		outputy.push(parseInt(tly[0]) + niney[i])
-		if (outputy === y) {
-			targety = 9;
-		}
 		for (var h = 0; h < y.length; h++) {
-			if (targetx[h] === targety[h]) {
+			if (outputy[h] === y[h]) {
 				count++
 			}
 		}
 		if (count == y.length) {
+			targety = 9;
+		}
+		if (targetx === targety) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
