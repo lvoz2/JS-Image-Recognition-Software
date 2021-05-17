@@ -72,7 +72,7 @@ function idofui() {
 	tly.push(y[0]);
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + zerox[i])
 		if (outputx === x) {
 			targetx = 0;
@@ -87,7 +87,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + onex[i])
 		if (outputx === x) {
 			targetx = 1;
@@ -102,7 +102,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + twox[i])
 		if (outputx === x) {
 			targetx = 2;
@@ -117,7 +117,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + threex[i])
 		if (outputx === x) {
 			targetx = 3;
@@ -132,7 +132,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + fourx[i])
 		if (outputx === x) {
 			targetx = 4;
@@ -147,7 +147,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + fivex[i])
 		if (outputx === x) {
 			targetx = 5;
@@ -162,7 +162,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + sixx[i])
 		if (outputx === x) {
 			targetx = 6;
@@ -177,7 +177,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + sevenx[i])
 		if (outputx === x) {
 			targetx = 7;
@@ -192,7 +192,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + eightx[i])
 		if (outputx === x) {
 			targetx = 8;
@@ -207,7 +207,7 @@ function idofui() {
 	}
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i <= y.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + ninex[i])
 		if (outputx === x) {
 			targetx = 9;
@@ -220,6 +220,4 @@ function idofui() {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
-	outputx = [];
-	outputy = [];
 }
