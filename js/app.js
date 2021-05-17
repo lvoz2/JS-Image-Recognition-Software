@@ -52,6 +52,10 @@ function idofui() {
 	tly = [];
 	x = [];
 	y = [];
+	outputx = [];
+	outputy = [];
+	targetx = 0;
+	targety = 0;
 	window.row = 0;
 	window.column = 0;
 	for (row = 0; row <= 9; row++) {
