@@ -1,7 +1,7 @@
 window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
 window.a;
-window.targetx;
-window.targety;
+window.targetx = 0;
+window.targety = 0;
 window.y = [];
 window.x = [];
 window.tlx = [];
