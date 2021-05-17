@@ -1,8 +1,8 @@
 window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
 window.a;
 window.count = 0;
-window.targetx = 0;
-window.targety = 0;
+window.targetx = 'This configuration is incorrect. Please try again';
+window.targety = 'This configuration is incorrect. Please try again';
 window.y = [];
 window.x = [];
 window.tlx = [];
@@ -55,8 +55,8 @@ function idofui() {
 	y = [];
 	outputx = [];
 	outputy = [];
-	targetx = 0;
-	targety = 0;
+	targetx = 'This configuration is incorrect. Please try again';
+	targety = 'This configuration is incorrect. Please try again';
 	window.row = 0;
 	window.column = 0;
 	for (row = 0; row <= 9; row++) {
