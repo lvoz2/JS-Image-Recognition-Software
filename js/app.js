@@ -341,4 +341,9 @@ function idofui() {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
+	if (targetx === 'This configuration is incorrect. Please try again') {
+		if (targety === 'This configuration is incorrect. Please try again') {
+			document.getElementById("output").innerHTML = 'This configuration is incorrect. Please try again';
+		}
+	}
 }
