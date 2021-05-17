@@ -66,7 +66,7 @@ function idofui() {
 	}
 	tlx.push(x[0]);
 	tly.push(y[0]);
-	for (var i = 0; i <= x.length(); i++) {
+	for (var i = 0; i <= x.length; i++) {
 		outputx.push(parseInt(tlx[0]) + zerox[i])
 		if (outputx === x) {
 			targetx = 0;
@@ -108,7 +108,7 @@ function idofui() {
 			targetx = 9;
 		}
 	}
-	for (var i = 0; i <= y.length(); i++) {
+	for (var i = 0; i <= y.length; i++) {
 		outputy.push(parseInt(tly[0]) + zeroy[i])
 		if (outputy === y) {
 			targety = 0;
