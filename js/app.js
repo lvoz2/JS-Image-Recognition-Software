@@ -2,6 +2,26 @@ window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", 
 window.a;
 window.y = [];
 window.x = [];
+window.zerox = [0,-1,+1,-1,+1,0];
+window.onex = [0,+1,+1,+1,0,+1,+2];
+window.twox = [0,+1,+2,+2,0,+1,+2,0,0,+1,+2];
+window.threex = [0,+1,+2,+2,0,+1,+2,+2,0,+1,+2];
+window.fourx = [0,+2,0,+2,0,+1,+2,+3,+2];
+window.fivex = [];
+window.sixx = [];
+window.sevenx = [];
+window.eightx = [];
+window.ninex = [];
+window.zeroy = [0,+1,+1,+2,+2,+3];
+window.oney = [0,0,+1,+2,+3,+3,+3];
+window.twoy = [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4];
+window.threey = [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4];
+window.foury = [0,0,+1,+1,+2,+2,+2,+2,+3];
+window.fivey = [];
+window.sixy = [];
+window.seveny = [];
+window.eighty = [];
+window.niney = [];
 function createNew10x10() {
 	var row;
 	var column;
