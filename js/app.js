@@ -1,5 +1,7 @@
 window.hexvalues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
 window.a;
+window.targetx;
+window.targety;
 window.y = [];
 window.x = [];
 window.tlx = [];
@@ -46,6 +48,8 @@ function swapBColour(id) {
 	}
 }
 function idofui() {
+	tlx = [];
+	tly = [];
 	x = [];
 	y = [];
 	window.row = 0;
@@ -60,5 +64,93 @@ function idofui() {
 			}
 		}
 	}
-	
+	tlx.push(x[0]);
+	tly.push(y[0]);
+	for (var i = 0; i <= x.length(); i++) {
+		outputx.push(parseInt(tlx[0]) + zerox[i])
+		if (outputx === x) {
+			targetx = 0;
+		}
+		outputx.push(parseInt(tlx[0]) + onex[i])
+		if (outputx === x) {
+			targetx = 1;
+		}
+		outputx.push(parseInt(tlx[0]) + twox[i])
+		if (outputx === x) {
+			targetx = 2;
+		}
+		outputx.push(parseInt(tlx[0]) + threex[i])
+		if (outputx === x) {
+			targetx = 3;
+		}
+		outputx.push(parseInt(tlx[0]) + fourx[i])
+		if (outputx === x) {
+			targetx = 4;
+		}
+		outputx.push(parseInt(tlx[0]) + fivex[i])
+		if (outputx === x) {
+			targetx = 5;
+		}
+		outputx.push(parseInt(tlx[0]) + sixx[i])
+		if (outputx === x) {
+			targetx = 6;
+		}
+		outputx.push(parseInt(tlx[0]) + sevenx[i])
+		if (outputx === x) {
+			targetx = 7;
+		}
+		outputx.push(parseInt(tlx[0]) + eightx[i])
+		if (outputx === x) {
+			targetx = 8;
+		}
+		outputx.push(parseInt(tlx[0]) + ninex[i])
+		if (outputx === x) {
+			targetx = 9;
+		}
+	}
+	for (var i = 0; i <= y.length(); i++) {
+		outputy.push(parseInt(tly[0]) + zeroy[i])
+		if (outputy === y) {
+			targety = 0;
+		}
+		outputy.push(parseInt(tly[0]) + oney[i])
+		if (outputy === y) {
+			targety = 1;
+		}
+		outputy.push(parseInt(tly[0]) + twoy[i])
+		if (outputy === y) {
+			targety = 2;
+		}
+		outputy.push(parseInt(tly[0]) + threey[i])
+		if (outputy === y) {
+			targety = 3;
+		}
+		outputy.push(parseInt(tly[0]) + foury[i])
+		if (outputy === y) {
+			targety = 4;
+		}
+		outputy.push(parseInt(tly[0]) + fivey[i])
+		if (outputy === y) {
+			targety = 5;
+		}
+		outputy.push(parseInt(tly[0]) + sixy[i])
+		if (outputy === y) {
+			targety = 6;
+		}
+		outputy.push(parseInt(tly[0]) + seveny[i])
+		if (outputy === y) {
+			targety = 7;
+		}
+		outputy.push(parseInt(tly[0]) + eighty[i])
+		if (outputy === y) {
+			targety = 8;
+		}
+		outputy.push(parseInt(tly[0]) + niney[i])
+		if (outputy === y) {
+			targety = 9;
+		}
+	}
+	if (targetx === targety) {
+		document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+	}
 }
