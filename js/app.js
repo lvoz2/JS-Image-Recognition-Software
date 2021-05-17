@@ -6,6 +6,7 @@ window.y = [];
 window.x = [];
 window.tlx = [];
 window.tly = [];
+window.count = 0;
 window.outputx = [];
 window.outputy = [];
 window.zerox = [0,+1,+2,0,+2,0,+2,0,+1,+2];
@@ -72,6 +73,7 @@ function idofui() {
 	tly.push(y[0]);
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + zerox[i])
 		if (outputx === x) {
@@ -81,12 +83,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 0;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + onex[i])
 		if (outputx === x) {
@@ -96,12 +104,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 1;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + twox[i])
 		if (outputx === x) {
@@ -111,12 +125,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 2;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + threex[i])
 		if (outputx === x) {
@@ -126,12 +146,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 3;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + fourx[i])
 		if (outputx === x) {
@@ -141,12 +167,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 4;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + fivex[i])
 		if (outputx === x) {
@@ -156,12 +188,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 5;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + sixx[i])
 		if (outputx === x) {
@@ -171,12 +209,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 6;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + sevenx[i])
 		if (outputx === x) {
@@ -186,12 +230,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 7;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + eightx[i])
 		if (outputx === x) {
@@ -201,12 +251,18 @@ function idofui() {
 		if (outputy === y) {
 			targety = 8;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
 	outputx = [];
 	outputy = [];
+	count = 0;
 	for (var i = 0; i < y.length; i++) {
 		outputx.push(parseInt(tlx[0]) + ninex[i])
 		if (outputx === x) {
@@ -216,7 +272,12 @@ function idofui() {
 		if (outputy === y) {
 			targety = 9;
 		}
-		if (targetx === targety) {
+		for (var h = 0; h < y.length; h++) {
+			if (targetx[h] === targety[h]) {
+				count++
+			}
+		}
+		if (count == y.length) {
 			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
 		}
 	}
