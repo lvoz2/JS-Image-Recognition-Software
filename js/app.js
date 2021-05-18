@@ -94,8 +94,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 0;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 0)) {
+			document.getElementById("output").innerHTML = 'Your number is: 0';
 		}
 	}
 	outputx = [];
@@ -121,8 +121,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 1;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 1)) {
+			document.getElementById("output").innerHTML = 'Your number is: 1';
 		}
 	}
 	outputx = [];
@@ -148,8 +148,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 2;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 2)) {
+			document.getElementById("output").innerHTML = 'Your number is: 2';
 		}
 	}
 	outputx = [];
@@ -175,8 +175,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 3;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 3)) {
+			document.getElementById("output").innerHTML = 'Your number is: 3';
 		}
 	}
 	outputx = [];
@@ -202,8 +202,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 4;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 4)) {
+			document.getElementById("output").innerHTML = 'Your number is: 4';
 		}
 	}
 	outputx = [];
@@ -229,8 +229,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 5;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 5)) {
+			document.getElementById("output").innerHTML = 'Your number is: 5';
 		}
 	}
 	outputx = [];
@@ -256,8 +256,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 6;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 6)) {
+			document.getElementById("output").innerHTML = 'Your number is: 6';
 		}
 	}
 	outputx = [];
@@ -283,8 +283,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 7;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 7)) {
+			document.getElementById("output").innerHTML = 'Your number is: 7';
 		}
 	}
 	outputx = [];
@@ -310,8 +310,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 8;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 8)) {
+			document.getElementById("output").innerHTML = 'Your number is: 8';
 		}
 	}
 	outputx = [];
@@ -337,8 +337,8 @@ function idofui() {
 		if (count == y.length) {
 			targety = 9;
 		}
-		if (targetx === targety) {
-			document.getElementById("output").innerHTML = 'Your number is: ' + targetx;
+		if ((targetx === targety) && (targetx === 9)) {
+			document.getElementById("output").innerHTML = 'Your number is: 9';
 		}
 	}
 	if (targetx === 'This configuration is incorrect. Please try again') {
