@@ -74,27 +74,27 @@ function idofui() {
 	outputy = [];
 	for (var i = 0; i < y.length; i++) {
 		count = 0;
-		for (let key in zerox) {
-			console.log(zerox[key[0]]);
-		}
-		outputx.push(parseInt(tlx[0]) + zerox.threebyfourcorners[i])
-		for (var h = 0; h < x.length; h++) {
-			if (outputx[h] === x[h]) {
-				count++
+		var x = 0;
+		for (x in zerox) {
+			outputx.push(parseInt(tlx[0]) + zerox[x][i])
+			for (var h = 0; h < x.length; h++) {
+				if (outputx[h] === x[h]) {
+					count++
+				}
 			}
-		}
-		if (count == x.length) {
-			targetx = 0;
-		}
-		count = 0;
-		outputy.push(parseInt(tly[0]) + zeroy.threebyfourcorners[i])
-		for (var h = 0; h < y.length; h++) {
-			if (outputy[h] === y[h]) {
-				count++
+			if (count == x.length) {
+				targetx = 0;
 			}
-		}
-		if (count == y.length) {
-			targety = 0;
+			count = 0;
+			outputy.push(parseInt(tly[0]) + zeroy[x][i])
+			for (var h = 0; h < y.length; h++) {
+				if (outputy[h] === y[h]) {
+					count++
+				}
+			}
+			if (count == y.length) {
+				targety = 0;
+			}
 		}
 		if ((targetx === targety) && (targetx === 0)) {
 			document.getElementById("output").innerHTML = 'Your number is: 0';
