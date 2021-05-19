@@ -28,16 +28,6 @@ window.sixy = [0,0,0,+1,+2,+2,+2,+3,+3,+4,+4,+4];
 window.seveny = [0,0,0,+1,+2,+3];
 window.eighty = [0,0,0,+1,+1,+2,+2,+2,+3,+3,+4,+4,+4];
 window.niney = [0,0,0,+1,+1,+2,+2,+2,+3,+4,+4,+4];
-function createNew10x10() {
-	var row;
-	var column;
-	for (row = 0; row <= 9; row++) {
-		for (column = 0; column <= 9; column++) {
-			var id = "T1R" + (row + 1) + "C" + (column + 1);
-			document.getElementById(id).attributes[1].value = "background-color: #" + hexvalues[Math.floor(Math.random() * 16)] + hexvalues[Math.floor(Math.random() * 16)] + hexvalues[Math.floor(Math.random() * 16)] + hexvalues[Math.floor(Math.random() * 16)] + hexvalues[Math.floor(Math.random() * 16)] + hexvalues[Math.floor(Math.random() * 16)];
-		}
-	}
-}
 function swapBColour(id) {
 	var color = document.getElementById(id).attributes[1].value;
 	if ((color === "background-color: #FFFFFF") || (color === "")) {
