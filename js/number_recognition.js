@@ -28,6 +28,14 @@ window.sixy = [0,0,0,+1,+2,+2,+2,+3,+3,+4,+4,+4];
 window.seveny = [0,0,0,+1,+2,+3];
 window.eighty = [0,0,0,+1,+1,+2,+2,+2,+3,+3,+4,+4,+4];
 window.niney = [0,0,0,+1,+1,+2,+2,+2,+3,+4,+4,+4];
+function reset() {
+	for (var i = 0; i < 10; i++) {
+		for (var g = 0; g < 10; g++) {
+			var id = "T1R" + (i + 1) + "C" + (g + 1);
+			document.getElementById(id).attributes[1].value = "background-color: #FFFFFF";
+		}
+	}
+}
 function swapBColour(id) {
 	var color = document.getElementById(id).attributes[1].value;
 	if ((color === "background-color: #FFFFFF") || (color === "")) {
