@@ -74,9 +74,9 @@ function idofui() {
 	outputy = [];
 	for (var i = 0; i < y.length; i++) {
 		count = 0;
-		var x = 0;
-		for (x in zerox) {
-			outputx.push(parseInt(tlx[0]) + zerox[x][i])
+		var c = 0;
+		for (c in zerox) {
+			outputx.push(parseInt(tlx[0]) + zerox[c][i])
 			for (var h = 0; h < x.length; h++) {
 				if (outputx[h] === x[h]) {
 					count++
@@ -86,7 +86,7 @@ function idofui() {
 				targetx = 0;
 			}
 			count = 0;
-			outputy.push(parseInt(tly[0]) + zeroy[x][i])
+			outputy.push(parseInt(tly[0]) + zeroy[c][i])
 			for (var h = 0; h < y.length; h++) {
 				if (outputy[h] === y[h]) {
 					count++
