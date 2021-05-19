@@ -74,6 +74,9 @@ function idofui() {
 	outputy = [];
 	for (var i = 0; i < y.length; i++) {
 		count = 0;
+		for (let key in zerox) {
+			console.log(zerox[key[0]]);
+		}
 		outputx.push(parseInt(tlx[0]) + zerox.threebyfourcorners[i])
 		for (var h = 0; h < x.length; h++) {
 			if (outputx[h] === x[h]) {
