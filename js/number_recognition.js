@@ -35,6 +35,7 @@ function reset() {
 		for (var g = 0; g < 10; g++) {
 			var id = "T1R" + (i + 1) + "C" + (g + 1);
 			document.getElementById(id).attributes[1].value = "background-color: #FFFFFF";
+			document.getElementById("output").innerHTML = '';
 		}
 	}
 }
