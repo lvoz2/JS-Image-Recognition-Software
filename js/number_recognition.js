@@ -72,10 +72,10 @@ function idofui() {
 	tly.push(y[0]);
 	outputx = [];
 	outputy = [];
-	for (var i = 0; i < y.length; i++) {
+	window.c = '';
+	for (c in zerox) {
 		count = 0;
-		var c = 0;
-		for (c in zerox) {
+		for (var i = 0; i < y.length; i++) {
 			outputx.push(parseInt(tlx[0]) + zerox[c][i])
 			for (var h = 0; h < x.length; h++) {
 				if (outputx[h] === x[h]) {
