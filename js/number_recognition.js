@@ -8,7 +8,8 @@ window.tlx = [];
 window.tly = [];
 window.outputx = [];
 window.outputy = [];
-window.zerox = [0,+1,+2,0,+2,0,+2,0,+1,+2];
+window.zerox = {threebyfourcorners: [0,+1,+2,0,+2,0,+2,0,+1,+2],
+	       threebyfouroutcorners: [0,-1,+1,-1,+1,0]};
 window.onex = [0,+1,+1,+1,0,+1,+2];
 window.twox = [0,+1,+2,+2,0,+1,+2,0,0,+1,+2];
 window.threex = [0,+1,+2,+2,0,+1,+2,+2,0,+1,+2];
@@ -18,7 +19,8 @@ window.sixx = [0,+1,+2,0,0,+1,+2,0,+2,0,+1,+2];
 window.sevenx = [0,+1,+2,+2,+1,+1];
 window.eightx = [0,+1,+2,0,+2,0,+1,+2,0,+2,0,+1,+2];
 window.ninex = [0,+1,+2,0,+2,0,+1,+2,+2,0,+1,+2];
-window.zeroy = [0,0,0,+1,+1,+2,+2,+3,+3,+3];
+window.zeroy = {threebyfourcorners: [0,0,0,+1,+1,+2,+2,+3,+3,+3],
+	       threebyfouroutcorners: [0,+1,+1,+2,+2,+3]};
 window.oney = [0,0,+1,+2,+3,+3,+3];
 window.twoy = [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4];
 window.threey = [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4];
@@ -72,7 +74,7 @@ function idofui() {
 	outputy = [];
 	for (var i = 0; i < y.length; i++) {
 		count = 0;
-		outputx.push(parseInt(tlx[0]) + zerox[i])
+		outputx.push(parseInt(tlx[0]) + zerox.threebyfourcorners[i])
 		for (var h = 0; h < x.length; h++) {
 			if (outputx[h] === x[h]) {
 				count++
@@ -82,7 +84,7 @@ function idofui() {
 			targetx = 0;
 		}
 		count = 0;
-		outputy.push(parseInt(tly[0]) + zeroy[i])
+		outputy.push(parseInt(tly[0]) + zeroy.threebyfourcorners[i])
 		for (var h = 0; h < y.length; h++) {
 			if (outputy[h] === y[h]) {
 				count++
