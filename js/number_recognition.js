@@ -8,7 +8,6 @@ window.tlx = [];
 window.tly = [];
 window.outputx = [];
 window.outputy = [];
-window.allvalues = {xvalues: {}, yvalues: {}};
 window.xvalues = {
 	'0': {one: [0,+1,+2,0,+2,0,+2,0,+1,+2],
 	       two: [0,-1,+1,-1,+1,0]},
@@ -33,12 +32,33 @@ window.yvalues = {
 	'7': {one: [0,0,0,+1,+2,+3]},
 	'8': {one: [0,0,0,+1,+1,+2,+2,+2,+3,+3,+4,+4,+4]},
 	'9': {one: [0,0,0,+1,+1,+2,+2,+2,+3,+4,+4,+4]}};
-function addNewValue(key1, key2, key3, key4, value2, value3, value4) {
-	allvalues[key1][key2] = value2;
-	allvalues[key1][key2][key3] = value3;
-	allvalues[key1][key2][key3][key4] = value4;
-}
-function startup() {
+function createnewdataset() {
+	tlx = [];
+	tly = [];
+	x = [];
+	y = [];
+	window.valuesx = [];
+	window.valuesy = [];
+	window.row = 0;
+	window.column = 0;
+	for (row = 0; row <= 9; row++) {
+		for (column = 0; column <= 9; column++) {
+			var id = "T1R" + (row + 1) + "C" + (column + 1);
+			a = document.getElementById(id).attributes[1].value;
+			if (a === "background-color: #000000") {
+				x.push(column + 1);
+				y.push(row + 1);
+			}
+		}
+	}
+	tlx.push(x[0]);
+	tly.push(y[0]);
+	for (var j = 0; j < x.length; j++) {
+		valuesx.push(x[j] - tlx[0])
+	}
+	for (var j = 0; j < y.length; j++) {
+		valuesy.push(y[j] - tly[0])
+	}
 }
 function reset() {
 	for (var i = 0; i < 10; i++) {
