@@ -8,28 +8,28 @@ window.tlx = [];
 window.tly = [];
 window.outputx = [];
 window.outputy = [];
-window.zerox = {threebyfourcorners: [0,+1,+2,0,+2,0,+2,0,+1,+2],
-	       threebyfouroutcorners: [0,-1,+1,-1,+1,0]};
-window.onex = [0,+1,+1,+1,0,+1,+2];
-window.twox = [0,+1,+2,+2,0,+1,+2,0,0,+1,+2];
-window.threex = [0,+1,+2,+2,0,+1,+2,+2,0,+1,+2];
-window.fourx = [0,+2,0,+2,0,+1,+2,+3,+2];
-window.fivex = [0,+1,+2,0,0,+1,+2,+2,0,+1,+2];
-window.sixx = [0,+1,+2,0,0,+1,+2,0,+2,0,+1,+2];
-window.sevenx = [0,+1,+2,+2,+1,+1];
-window.eightx = [0,+1,+2,0,+2,0,+1,+2,0,+2,0,+1,+2];
-window.ninex = [0,+1,+2,0,+2,0,+1,+2,+2,0,+1,+2];
-window.zeroy = {threebyfourcorners: [0,0,0,+1,+1,+2,+2,+3,+3,+3],
-	       threebyfouroutcorners: [0,+1,+1,+2,+2,+3]};
-window.oney = [0,0,+1,+2,+3,+3,+3];
-window.twoy = [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4];
-window.threey = [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4];
-window.foury = [0,0,+1,+1,+2,+2,+2,+2,+3];
-window.fivey = [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4];
-window.sixy = [0,0,0,+1,+2,+2,+2,+3,+3,+4,+4,+4];
-window.seveny = [0,0,0,+1,+2,+3];
-window.eighty = [0,0,0,+1,+1,+2,+2,+2,+3,+3,+4,+4,+4];
-window.niney = [0,0,0,+1,+1,+2,+2,+2,+3,+4,+4,+4];
+window.zerox = {one: [0,+1,+2,0,+2,0,+2,0,+1,+2],
+	       two: [0,-1,+1,-1,+1,0]};
+window.onex = {one: [0,+1,+1,+1,0,+1,+2]};
+window.twox = {one: [0,+1,+2,+2,0,+1,+2,0,0,+1,+2]};
+window.threex = {one: [0,+1,+2,+2,0,+1,+2,+2,0,+1,+2]};
+window.fourx = {one: [0,+2,0,+2,0,+1,+2,+3,+2]};
+window.fivex = {one: [0,+1,+2,0,0,+1,+2,+2,0,+1,+2]};
+window.sixx = {one: [0,+1,+2,0,0,+1,+2,0,+2,0,+1,+2]};
+window.sevenx = {one: [0,+1,+2,+2,+1,+1]};
+window.eightx = {one: [0,+1,+2,0,+2,0,+1,+2,0,+2,0,+1,+2]};
+window.ninex = {one: [0,+1,+2,0,+2,0,+1,+2,+2,0,+1,+2]};
+window.zeroy = {one: [0,0,0,+1,+1,+2,+2,+3,+3,+3],
+	       two: [0,+1,+1,+2,+2,+3]};
+window.oney = {one: [0,0,+1,+2,+3,+3,+3]};
+window.twoy = {one: [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4]};
+window.threey = {one: [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4]};
+window.foury = {one: [0,0,+1,+1,+2,+2,+2,+2,+3]};
+window.fivey = {one: [0,0,0,+1,+2,+2,+2,+3,+4,+4,+4]};
+window.sixy = {one: [0,0,0,+1,+2,+2,+2,+3,+3,+4,+4,+4]};
+window.seveny = {one: [0,0,0,+1,+2,+3]};
+window.eighty = {one: [0,0,0,+1,+1,+2,+2,+2,+3,+3,+4,+4,+4]};
+window.niney = {one: [0,0,0,+1,+1,+2,+2,+2,+3,+4,+4,+4]};
 function reset() {
 	for (var i = 0; i < 10; i++) {
 		for (var g = 0; g < 10; g++) {
