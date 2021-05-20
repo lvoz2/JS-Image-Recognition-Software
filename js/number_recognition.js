@@ -85,7 +85,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == zerox[c].length) {
 				targetx = 0;
 			}
 			count = 0;
@@ -95,7 +95,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == zeroy[c].length) {
 				targety = 0;
 			}
 		}
@@ -116,7 +116,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == onex[c].length) {
 				targetx = 1;
 			}
 			count = 0;
@@ -126,7 +126,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == oney[c].length) {
 				targety = 1;
 			}
 		}
@@ -147,7 +147,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == twox[c].length) {
 				targetx = 2;
 			}
 			count = 0;
@@ -157,7 +157,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == twoy[c].length) {
 				targety = 2;
 			}
 		}
@@ -178,7 +178,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == threex[c].length) {
 				targetx = 3;
 			}
 			count = 0;
@@ -188,7 +188,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == threey[c].length) {
 				targety = 3;
 			}
 		}
@@ -209,7 +209,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == fourx[c].length) {
 				targetx = 4;
 			}
 			count = 0;
@@ -219,7 +219,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == foury[c].length) {
 				targety = 4;
 			}
 		}
@@ -240,7 +240,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == fivex[c].length) {
 				targetx = 5;
 			}
 			count = 0;
@@ -250,7 +250,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == fivey[c].length) {
 				targety = 5;
 			}
 		}
@@ -271,7 +271,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == sixx[c].length) {
 				targetx = 6;
 			}
 			count = 0;
@@ -281,7 +281,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == sixy[c].length) {
 				targety = 6;
 			}
 		}
@@ -302,7 +302,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == sevenx[c].length) {
 				targetx = 7;
 			}
 			count = 0;
@@ -312,7 +312,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == seveny[c].length) {
 				targety = 7;
 			}
 		}
@@ -333,7 +333,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == eightx[c].length) {
 				targetx = 8;
 			}
 			count = 0;
@@ -343,7 +343,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == eighty[c].length) {
 				targety = 8;
 			}
 		}
@@ -364,7 +364,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == x.length) {
+			if (count == ninex[c].length) {
 				targetx = 9;
 			}
 			count = 0;
@@ -374,7 +374,7 @@ function idofui() {
 					count++
 				}
 			}
-			if (count == y.length) {
+			if (count == niney[c].length) {
 				targety = 9;
 			}
 		}
