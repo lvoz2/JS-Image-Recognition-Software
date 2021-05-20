@@ -8,6 +8,7 @@ window.tlx = [];
 window.tly = [];
 window.outputx = [];
 window.outputy = [];
+window.allvalues = {xvalues: {}, yvalues: {}};
 window.xvalues = {
 	'0': {one: [0,+1,+2,0,+2,0,+2,0,+1,+2],
 	       two: [0,-1,+1,-1,+1,0]},
@@ -32,6 +33,13 @@ window.yvalues = {
 	'7': {one: [0,0,0,+1,+2,+3]},
 	'8': {one: [0,0,0,+1,+1,+2,+2,+2,+3,+3,+4,+4,+4]},
 	'9': {one: [0,0,0,+1,+1,+2,+2,+2,+3,+4,+4,+4]}};
+function addNewValue(key1, key2, key3, key4, value2, value3, value4) {
+	allvalues[key1][key2] = value2;
+	allvalues[key1][key2][key3] = value3;
+	allvalues[key1][key2][key3][key4] = value4;
+}
+function startup() {
+}
 function reset() {
 	for (var i = 0; i < 10; i++) {
 		for (var g = 0; g < 10; g++) {
