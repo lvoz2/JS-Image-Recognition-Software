@@ -147,8 +147,8 @@ var openFile = function(file) {
 		var dataURL = reader.result;
 		var output = document.getElementById('user_image');
 		output.src = dataURL;
-		window.width = document.getElementById("user_canvas").width;
-		window.height = document.getElementById("user_canvas").height;
+		window.width = document.getElementById("user_image").width;
+		window.height = document.getElementById("user_image").height;
 	};
 	reader.readAsDataURL(input.files[0]);
 };
