@@ -145,7 +145,7 @@ var openFile = function(file) {
 	var reader = new FileReader();
 	reader.onload = function(){
 		var dataURL = reader.result;
-		var output = document.getElementById('output');
+		var output = document.getElementById('user_image');
 		output.src = dataURL;
 	};
 	reader.readAsDataURL(input.files[0]);
