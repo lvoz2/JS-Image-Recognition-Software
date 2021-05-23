@@ -141,7 +141,7 @@ function idofui() {
 }
 // Start of code that was taken from external sources and wasn't developed by me
 var openFile = function(file) {
-	winow.input = file.target;
+	window.input = file.target;
 	var reader = new FileReader();
 	reader.onload = function(){
 		var dataURL = reader.result;
