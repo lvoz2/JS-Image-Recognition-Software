@@ -5,9 +5,13 @@ var openFile = function(file) {
 	reader.onload = function(){
 		var dataURL = reader.result;
 		var output = document.getElementById('user_image');
+		output.onload = function() {
+			// access image size here 
+			console.log(this.width);
+		};
 		output.src = dataURL;
-		window.width = document.getElementById("user_image").width;
-		window.height = document.getElementById("user_image").height;
+		window.width = output.width;
+		window.height = output.height;
 	};
 	reader.readAsDataURL(input.files[0]);
 };
