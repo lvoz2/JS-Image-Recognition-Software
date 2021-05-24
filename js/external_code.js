@@ -6,12 +6,10 @@ var openFile = function(file) {
 		var dataURL = reader.result;
 		var output = document.getElementById('user_image');
 		output.onload = function() {
-			// access image size here 
-			console.log(this.width);
+			window.width = this.width;
+			window.height = this.height;
 		};
 		output.src = dataURL;
-		window.width = output.width;
-		window.height = output.height;
 	};
 	reader.readAsDataURL(input.files[0]);
 };
