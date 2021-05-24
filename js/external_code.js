@@ -12,8 +12,6 @@ var openFile = function(file) {
 		output.src = dataURL;
 	};
 	reader.readAsDataURL(input.files[0]);
-};
-function getImageData() {
 	var c = document.getElementById("user_canvas");
 	var ctx = c.getContext("2d");
 	var img = document.getElementById("user_image");
@@ -21,4 +19,5 @@ function getImageData() {
 	c.height = height;
 	ctx.drawImage(img, 0, 0);
 	window.imgData = ctx.getImageData(0, 0, c.width, c.height);
+	convertImgData()
 }
