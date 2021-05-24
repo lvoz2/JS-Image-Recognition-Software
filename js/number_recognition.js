@@ -4,6 +4,7 @@ window.targetx = 'This configuration is incorrect. Please try again';
 window.targety = 'This configuration is incorrect. Please try again';
 window.y = [];
 window.x = [];
+window.imgData = [];
 window.tlx = [];
 window.tly = [];
 window.outputx = [];
