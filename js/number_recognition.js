@@ -142,6 +142,7 @@ function idofui() {
 }
 function convertImgData() {
 	window.newImgData = [];
+	window.formImgData = [];
 	for (i = 0; i < imgData.data.length; i += 4) {
 		k = [];
 		k.push(imgData.data[i]);
@@ -149,5 +150,12 @@ function convertImgData() {
 		k.push(imgData.data[i + 2]);
 		k.push(imgData.data[i + 3]);
 		newImgData.push(k);
+	}
+	for (i = 0; i < newImgData.length; i += width) {
+		k = [];
+		for (d = 0; d < width; d++) {
+			k.push(newImgData[i + d]);
+		}
+		formImgData.push(k);
 	}
 }
