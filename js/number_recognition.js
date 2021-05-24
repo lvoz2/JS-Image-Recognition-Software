@@ -142,12 +142,12 @@ function idofui() {
 }
 function convertImgData() {
 	window.newImgData = [];
-	for (i = 0; i < imgData.length; i += 4) {
+	for (i = 0; i < imgData.data.length; i += 4) {
 		k = [];
-		k.push(imgData[i]);
-		k.push(imgData[i + 1]);
-		k.push(imgData[i + 2]);
-		k.push(imgData[i + 3]);
+		k.push(imgData.data[i]);
+		k.push(imgData.data[i + 1]);
+		k.push(imgData.data[i + 2]);
+		k.push(imgData.data[i + 3]);
 		newImgData.push(k);
 	}
 }
