@@ -149,5 +149,5 @@ function convertImgData() {
 		k.push(imgData[i + 2]);
 		k.push(imgData[i + 3]);
 		newImgData.push(k);
-	]
+	}
 }
