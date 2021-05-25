@@ -151,9 +151,9 @@ function convertImgData() {
 		k.push(imgData.data[i + 3]);
 		newImgData.push(k);
 	}
-	for (i = 0; i < newImgData.length; i += width) {
+	for (i = 0; i < newImgData.length; i += height) {
 		k = [];
-		for (d = 0; d < width; d++) {
+		for (d = 0; d < height; d++) {
 			k.push(newImgData[i + d]);
 		}
 		formImgData.push(k);
