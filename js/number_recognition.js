@@ -135,7 +135,7 @@ function convertImgData() {
 		formImgData.push(k);
 	}
 }
-function sendNewData() {
+async function sendNewData() {
 	await octokit.request('PUT /repos/lvoz2/JS-Image-Recognition-Software/contents/{path}', {
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
