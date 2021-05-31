@@ -9,7 +9,6 @@ window.tlx = [];
 window.tly = [];
 window.outputx = [];
 window.outputy = [];
-window.octokit = new Octokit({ auth: `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`});
 function createnewdataset() {
 	tlx = [];
 	tly = [];
