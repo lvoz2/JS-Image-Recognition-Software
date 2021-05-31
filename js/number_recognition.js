@@ -9,7 +9,7 @@ window.tlx = [];
 window.tly = [];
 window.outputx = [];
 window.outputy = [];
-
+import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
 function createnewdataset() {
 	tlx = [];
 	tly = [];
