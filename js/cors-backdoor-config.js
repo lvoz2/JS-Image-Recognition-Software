@@ -6,8 +6,7 @@ module.exports = {
     // Custom Headers
     headers: {
         // Set the common CORS headers
-        'Access-Control-Allow-Origin': 'https://lvoz2.github.io/JS-Image-Recognition-Software/number_recognition.html',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization, customer-id',
+        'Access-Control-Allow-Origin': 'https://lvoz2.github.io/JS-Image-Recognition-Software/number_recognition.html'
     },
     
     // Logger Options
