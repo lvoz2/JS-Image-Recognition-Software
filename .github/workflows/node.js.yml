@@ -26,4 +26,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g cors-backdoor
-    - run: cors-backdoor --target https://api.github.com/repos/lvoz2/JS-Image-Recognition-Software/contents/text.txt [--config https://lvoz2.github.io/JS-Image-Recognition-Software/js/cors-backdoor-config.js]
+    - run: cors-backdoor --target https://lvoz2.github.io/JS-Image-Recognition-Software/text.txt [--config https://lvoz2.github.io/JS-Image-Recognition-Software/js/cors-backdoor-config.js]
