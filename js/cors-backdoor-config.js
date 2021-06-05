@@ -2,7 +2,7 @@
 module.exports = {
     
     // Same as the CLI target parameter
-    target: 'https://api.github.com/repos/lvoz2/JS-Image-Recognition-Software/contents/text.txt',
+    target: 'https://lvoz2.github.io/JS-Image-Recognition-Software/text.txt',
     // Custom Headers
     headers: {
         // Set the common CORS headers
