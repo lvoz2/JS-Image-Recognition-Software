@@ -140,7 +140,6 @@ async function sendNewData() {
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
 		path: 'text.txt',
-		message: 'Add new data',
-		content: 'content'
+		message: 'Add new data'
 	})
 }
