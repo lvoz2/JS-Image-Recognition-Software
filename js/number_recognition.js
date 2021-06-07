@@ -136,7 +136,7 @@ function convertImgData() {
 	}
 }
 async function sendNewData() {
-	await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+	await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
 		path: 'text.txt',
