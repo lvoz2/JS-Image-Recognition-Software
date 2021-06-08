@@ -2,7 +2,7 @@ require 'openssl'
 require 'jwt'  # https://rubygems.org/gems/jwt
 
 # Private key contents
-private_pem = File.read(YOUR_PATH_TO_PEM)
+private_pem = File.read('https://lvoz2.github.io/JS-Image-Recognition-Software/js-image-recognition-software.2021-06-07.private-key.pem')
 private_key = OpenSSL::PKey::RSA.new(private_pem)
 
 # Generate the JWT
@@ -12,7 +12,7 @@ payload = {
   # JWT expiration time (10 minute maximum)
   exp: Time.now.to_i + (10 * 60),
   # GitHub App's identifier
-  iss: YOUR_APP_ID
+  iss: 119626
 }
 
 jwt = JWT.encode(payload, private_key, "RS256")
