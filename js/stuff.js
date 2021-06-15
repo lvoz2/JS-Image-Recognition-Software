@@ -4,7 +4,7 @@ const octokit = new Octokit({
 	userAgent: 'lvoz2',
 	timeZone: 'Australia/Sydney',
 });
-async function sendNewData() {
+window.sendNewData = async function() {
 	await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
