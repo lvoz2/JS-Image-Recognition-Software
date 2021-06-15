@@ -135,14 +135,3 @@ function convertImgData() {
 		formImgData.push(k);
 	}
 }
-async function sendNewData() {
-	const xhr = new XMLHttpRequest();
-	const url = 'https://api.github.com/repos/lvoz2/JS-Image-Recognition-Software/contents/text.txt';
-	xhr.open('GET', url, true);
-	await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-		owner: 'lvoz2',
-		repo: 'JS-Image-Recognition-Software',
-		path: 'text.txt',
-		message: 'Add new data'
-	})
-}
