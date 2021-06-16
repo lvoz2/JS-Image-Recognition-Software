@@ -10,8 +10,8 @@ window.sendNewData = async function() {
 		scopes: 'repo'
 	})
 	await octokit.request('GET https://github.com/login/oauth/authorize', {
-		client_id: '',
-		client_secret: '',
+		client_id: '7415eb3be51e7222a91c',
+		client_secret: 'f43a1da2796648bb8f8d98a166ff3278d7843624',
 		code: ghCode
 	})
 	await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
