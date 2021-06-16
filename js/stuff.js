@@ -5,9 +5,14 @@ const octokit = new Octokit({
 	timeZone: 'Australia/Sydney',
 });
 window.sendNewData = async function() {
-	var code = await octokit.request('GET https://github.com/login/oauth/authorize', {
+	var ghCode = await octokit.request('GET https://github.com/login/oauth/authorize', {
 		client_id: '7415eb3be51e7222a91c',
 		scopes: 'repo'
+	})
+	await octokit.request('GET https://github.com/login/oauth/authorize', {
+		client_id: '',
+		client_secret: '',
+		code: ghCode
 	})
 	await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
 		owner: 'lvoz2',
