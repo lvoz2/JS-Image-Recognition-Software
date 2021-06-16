@@ -5,6 +5,9 @@ const octokit = new Octokit({
 	timeZone: 'Australia/Sydney',
 });
 window.sendNewData = async function() {
+	await octokit.request('GET https://github.com/login/oauth/authorize', {
+		
+	})
 	await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
