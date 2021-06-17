@@ -1,8 +1,19 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
+import { createOAuthAppAuth } from "https://cdn.skypack.dev/@octokit/auth-oauth-app";
+var auth = createOAuthAppAuth({
+	clientType: "oauth-app",
+	clientId: "7415eb3be51e7222a91c",
+	clientSecret: "f43a1da2796648bb8f8d98a166ff3278d7843624"
+});
+var userAuthenticationFromWebFlow = await auth({
+	type: "oauth-user",
+	code: "random123",
+	state: "mystate123"
+});
+var createAppAuth = require("@octokit/auth-oauth-app");
 const octokit = new Octokit({
-	auth: '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',
-	userAgent: 'lvoz2',
-	timeZone: 'Australia/Sydney',
+	authStrategy: createAppAuth,
+	auth: userAuthenticationFromWebFlow
 });
 window.sendNewData = async function() {
 	var ghCode = await octokit.request('GET https://github.com/login/oauth/authorize', {
