@@ -1,5 +1,22 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
 import { createOAuthAppAuth } from "https://cdn.skypack.dev/@octokit/auth-oauth-app";
+const { OAuthApp, createNodeMiddleware } = require("@octokit/oauth-app");
+
+const app = new OAuthApp({
+  clientType: "oauth-app",
+  clientId: "7415eb3be51e7222a91c",
+  clientSecret: "f43a1da2796648bb8f8d98a166ff3278d7843624",
+});
+
+app.on("token", async ({ token, octokit }) => {
+  const { data } = await octokit.request("GET /user");
+  console.log(`Token retrieved for ${data.login}`);
+});
+
+require("http").createServer(createNodeMiddleware(app)).listen(3000);
+// can now receive user authorization callbacks at /api/github/oauth/callback
+// See all endpoints at https://github.com/octokit/oauth-app.js#middlewares
+/*
 var auth = createOAuthAppAuth({
 	clientType: "oauth-app",
 	clientId: "7415eb3be51e7222a91c",
@@ -15,6 +32,7 @@ const octokit = new Octokit({
 	authStrategy: createAppAuth,
 	auth: userAuthenticationFromWebFlow
 });
+*/
 window.sendNewData = async function() {
 	var ghCode = await octokit.request('GET https://github.com/login/oauth/authorize', {
 		client_id: '7415eb3be51e7222a91c',
