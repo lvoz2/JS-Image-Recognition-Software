@@ -7,7 +7,8 @@ const octokit = new Octokit({
 window.sendNewData = async function() {
 	var ghCode = await octokit.request('GET https://github.com/login/oauth/authorize', {
 		client_id: '7415eb3be51e7222a91c',
-		scopes: 'repo'
+		scopes: 'repo',
+		Origin: 'https://lvoz2.github.io'
 	})
 	await octokit.request('GET https://github.com/login/oauth/authorize', {
 		client_id: '7415eb3be51e7222a91c',
