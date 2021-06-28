@@ -12,8 +12,8 @@ app.on("token", async ({ token, octokit }) => {
   console.log(`Token retrieved for ${data.login}`);
 });
 
-var a = require(['http'], function (http) {})
-a.createServer(createNodeMiddleware(app)).listen(3000);
+import * as http from 'http';
+http.createServer(createNodeMiddleware(app)).listen(3000);
 // can now receive user authorization callbacks at /api/github/oauth/callback
 // See all endpoints at https://github.com/octokit/oauth-app.js#middlewares
 /*
