@@ -52,7 +52,7 @@ window.sendNewData = async function() {
 		code: ghCode
 	})
 	*/
-	await octokit.rest.repos.createOrUpdateFileContents({
+	await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
 		path: 'text.txt',
