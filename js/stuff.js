@@ -1,7 +1,7 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
 import { createOAuthAppAuth } from "https://cdn.skypack.dev/@octokit/auth-oauth-app";
 import { OAuthApp, createNodeMiddleware } from "https://cdn.skypack.dev/@octokit/oauth-app";
-var authenticate = function() {
+window.authenticate = function() {
 	const app = new OAuthApp({
 	  clientType: "oauth-app",
 	  clientId: "7415eb3be51e7222a91c",
