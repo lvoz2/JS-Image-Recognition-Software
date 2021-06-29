@@ -26,21 +26,21 @@ const {
   Symbol,
   RegExpPrototypeTest,
 } = primordials;
-const { setImmediate } = require('timers');
+const { setImmediate } = require('/JS-Image-Recognition-Software/node-modules/timers');
 
 const { methods, HTTPParser } = internalBinding('http_parser');
-const { getOptionValue } = require('internal/options');
+const { getOptionValue } = require('/JS-Image-Recognition-Software/node-modules/internal/options');
 const insecureHTTPParser = getOptionValue('--insecure-http-parser');
 
-const FreeList = require('internal/freelist');
-const incoming = require('_http_incoming');
+const FreeList = require('/JS-Image-Recognition-Software/node-modules/internal/freelist');
+const incoming = require('-http-incoming');
 const {
   IncomingMessage,
   readStart,
   readStop
 } = incoming;
 
-let debug = require('internal/util/debuglog').debuglog('http', (fn) => {
+let debug = require('/JS-Image-Recognition-Software/node-modules/internal/util/debuglog').debuglog('http', (fn) => {
   debug = fn;
 });
 
