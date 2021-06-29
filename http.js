@@ -27,21 +27,21 @@ const {
   ObjectDefineProperty,
 } = primordials;
 
-const httpAgent = require('_http_agent');
-const { ClientRequest } = require('_http_client');
-const { methods } = require('_http_common');
-const { IncomingMessage } = require('_http_incoming');
+const httpAgent = require('/JS-Image-Recognition-Software/node-modules/_http_agent');
+const { ClientRequest } = require('/JS-Image-Recognition-Software/node-modules/_http_client');
+const { methods } = require('/JS-Image-Recognition-Software/node-modules/_http_common');
+const { IncomingMessage } = require('/JS-Image-Recognition-Software/node-modules/_http_incoming');
 const {
   validateHeaderName,
   validateHeaderValue,
   OutgoingMessage
-} = require('_http_outgoing');
+} = require('/JS-Image-Recognition-Software/node-modules/_http_outgoing');
 const {
   _connectionListener,
   STATUS_CODES,
   Server,
   ServerResponse
-} = require('_http_server');
+} = require('/JS-Image-Recognition-Software/node-modules/_http_server');
 let maxHeaderSize;
 
 /**
@@ -131,7 +131,7 @@ ObjectDefineProperty(module.exports, 'maxHeaderSize', {
   enumerable: true,
   get() {
     if (maxHeaderSize === undefined) {
-      const { getOptionValue } = require('internal/options');
+      const { getOptionValue } = require('/JS-Image-Recognition-Software/node-modules/internal/options');
       maxHeaderSize = getOptionValue('--max-http-header-size');
     }
 
