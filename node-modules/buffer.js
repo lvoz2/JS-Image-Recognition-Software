@@ -78,15 +78,15 @@ const {
   lazyDOMException,
   normalizeEncoding,
   kIsEncodingSymbol
-} = require('internal/util');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util');
 const {
   isAnyArrayBuffer,
   isArrayBufferView,
   isUint8Array
-} = require('internal/util/types');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util/types');
 const {
   inspect: utilInspect
-} = require('internal/util/inspect');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util/inspect');
 const { encodings } = internalBinding('string_decoder');
 
 const {
@@ -99,14 +99,14 @@ const {
     ERR_UNKNOWN_ENCODING
   },
   hideStackFrames
-} = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   validateArray,
   validateBuffer,
   validateNumber,
   validateInteger,
   validateString
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 // Provide validateInteger() but with kMaxLength as the default maximum value.
 const validateOffset = (value, name, min = 0, max = kMaxLength) =>
   validateInteger(value, name, min, max);
@@ -116,11 +116,11 @@ const {
   markAsUntransferable,
   addBufferPrototypeMethods,
   createUnsafeBuffer
-} = require('internal/buffer');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/buffer');
 
 const {
   Blob,
-} = require('internal/blob');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/blob');
 
 FastBuffer.prototype.constructor = Buffer;
 Buffer.prototype = FastBuffer.prototype;
@@ -171,7 +171,7 @@ const bufferWarning = 'Buffer() is deprecated due to security and usability ' +
 function showFlaggedDeprecation() {
   if (bufferWarningAlreadyEmitted ||
       ++nodeModulesCheckCounter > 10000 ||
-      (!require('internal/options').getOptionValue('--pending-deprecation') &&
+      (!require('/JS-Image-Recognition-Software/node-modules/internal/options').getOptionValue('--pending-deprecation') &&
        isInsideNodeModules())) {
     // We don't emit a warning, because we either:
     // - Already did so, or
