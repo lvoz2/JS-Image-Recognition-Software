@@ -31,9 +31,9 @@ const {
   SymbolFor,
 } = primordials;
 
-const net = require('net');
-const EE = require('events');
-const assert = require('internal/assert');
+const net = require('/JS-Image-Recognition-Software/node-modules/net');
+const EE = require('/JS-Image-Recognition-Software/node-modules/events');
+const assert = require('/JS-Image-Recognition-Software/node-modules/internal/assert');
 const {
   parsers,
   freeParser,
@@ -46,22 +46,22 @@ const {
   isLenient,
   _checkInvalidHeaderChar: checkInvalidHeaderChar,
   prepareError,
-} = require('_http_common');
-const { OutgoingMessage } = require('_http_outgoing');
+} = require('/JS-Image-Recognition-Software/node-modules/-http-common');
+const { OutgoingMessage } = require('/JS-Image-Recognition-Software/node-modules/-http-outgoing');
 const {
   kOutHeaders,
   kNeedDrain,
   emitStatistics
-} = require('internal/http');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/http');
 const {
   defaultTriggerAsyncIdScope,
   getOrSetAsyncId
-} = require('internal/async_hooks');
-const { IncomingMessage } = require('_http_incoming');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks');
+const { IncomingMessage } = require('/JS-Image-Recognition-Software/node-modules/-http-incoming');
 const {
   connResetException,
   codes
-} = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   ERR_HTTP_REQUEST_TIMEOUT,
   ERR_HTTP_HEADERS_SENT,
@@ -74,19 +74,19 @@ const {
 const {
   validateInteger,
   validateBoolean
-} = require('internal/validators');
-const Buffer = require('buffer').Buffer;
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
+const Buffer = require('/JS-Image-Recognition-Software/node-modules/buffer').Buffer;
 const {
   DTRACE_HTTP_SERVER_REQUEST,
   DTRACE_HTTP_SERVER_RESPONSE
-} = require('internal/dtrace');
-const { setTimeout, clearTimeout } = require('timers');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/dtrace');
+const { setTimeout, clearTimeout } = require('/JS-Image-Recognition-Software/node-modules/timers');
 
-let debug = require('internal/util/debuglog').debuglog('http', (fn) => {
+let debug = require('/JS-Image-Recognition-Software/node-modules/internal/util/debuglog').debuglog('http', (fn) => {
   debug = fn;
 });
 
-const dc = require('diagnostics_channel');
+const dc = require('/JS-Image-Recognition-Software/node-modules/diagnostics-channel');
 const onRequestStartChannel = dc.channel('http.server.request.start');
 const onResponseFinishChannel = dc.channel('http.server.response.finish');
 
@@ -95,7 +95,7 @@ const kServerResponseStatistics = Symbol('ServerResponseStatistics');
 
 const {
   hasObserver,
-} = require('internal/perf/observe');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/perf/observe');
 
 const STATUS_CODES = {
   100: 'Continue',                   // RFC 7231 6.2.1
