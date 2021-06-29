@@ -17,12 +17,12 @@ const {
   ERR_ASYNC_CALLBACK,
   ERR_ASYNC_TYPE,
   ERR_INVALID_ASYNC_ID
-} = require('internal/errors').codes;
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors').codes;
 const {
   validateFunction,
   validateString,
-} = require('internal/validators');
-const internal_async_hooks = require('internal/async_hooks');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
+const internal_async_hooks = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks');
 
 // Get functions
 // For userland AsyncResources, make sure to emit a destroy event when the
