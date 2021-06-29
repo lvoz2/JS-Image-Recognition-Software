@@ -38,20 +38,20 @@ const {
   Symbol,
 } = primordials;
 
-const { getDefaultHighWaterMark } = require('internal/streams/state');
-const assert = require('internal/assert');
-const EE = require('events');
-const Stream = require('stream');
-const internalUtil = require('internal/util');
-const { kOutHeaders, utcDate, kNeedDrain } = require('internal/http');
-const { Buffer } = require('buffer');
-const common = require('_http_common');
+const { getDefaultHighWaterMark } = require('/JS-Image-Recognition-Software/node-modules/internal/streams/state');
+const assert = require('/JS-Image-Recognition-Software/node-modules/internal/assert');
+const EE = require('/JS-Image-Recognition-Software/node-modules/events');
+const Stream = require('/JS-Image-Recognition-Software/node-modules/stream');
+const internalUtil = require('/JS-Image-Recognition-Software/node-modules/internal/util');
+const { kOutHeaders, utcDate, kNeedDrain } = require('/JS-Image-Recognition-Software/node-modules/internal/http');
+const { Buffer } = require('/JS-Image-Recognition-Software/node-modules/buffer');
+const common = require('/JS-Image-Recognition-Software/node-modules/-http-common');
 const checkIsHttpToken = common._checkIsHttpToken;
 const checkInvalidHeaderChar = common._checkInvalidHeaderChar;
 const {
   defaultTriggerAsyncIdScope,
   symbols: { async_id_symbol }
-} = require('internal/async_hooks');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks');
 const {
   codes: {
     ERR_HTTP_HEADERS_SENT,
