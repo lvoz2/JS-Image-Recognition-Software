@@ -30,8 +30,8 @@ const {
   Symbol
 } = primordials;
 
-const { Readable, finished } = require('stream');
-const { kDestroy } = require('internal/streams/destroy');
+const { Readable, finished } = require('/JS-Image-Recognition-Software/node-modules/stream');
+const { kDestroy } = require('/JS-Image-Recognition-Software/node-modules/internal/streams/destroy');
 
 const kHeaders = Symbol('kHeaders');
 const kHeadersCount = Symbol('kHeadersCount');
