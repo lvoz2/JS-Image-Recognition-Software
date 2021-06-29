@@ -27,7 +27,7 @@ const {
   ObjectDefineProperty,
 } = primordials;
 
-const httpAgent = require('/JS-Image-Recognition-Software/node-modules/-http_agent');
+const httpAgent = require('/JS-Image-Recognition-Software/node-modules/-http-agent');
 const { ClientRequest } = require('/JS-Image-Recognition-Software/node-modules/-http-client');
 const { methods } = require('/JS-Image-Recognition-Software/node-modules/-http-common');
 const { IncomingMessage } = require('/JS-Image-Recognition-Software/node-modules/-http-incoming');
