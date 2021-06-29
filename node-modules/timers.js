@@ -1,319 +1,665 @@
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 'use strict';
 
+// HOW and WHY the timers implementation works the way it does.
+//
+// Timers are crucial to Node.js. Internally, any TCP I/O connection creates a
+// timer so that we can time out of connections. Additionally, many user
+// libraries and applications also use timers. As such there may be a
+// significantly large amount of timeouts scheduled at any given time.
+// Therefore, it is very important that the timers implementation is performant
+// and efficient.
+//
+// Note: It is suggested you first read through the lib/internal/linkedlist.js
+// linked list implementation, since timers depend on it extensively. It can be
+// somewhat counter-intuitive at first, as it is not actually a class. Instead,
+// it is a set of helpers that operate on an existing object.
+//
+// In order to be as performant as possible, the architecture and data
+// structures are designed so that they are optimized to handle the following
+// use cases as efficiently as possible:
+
+// - Adding a new timer. (insert)
+// - Removing an existing timer. (remove)
+// - Handling a timer timing out. (timeout)
+//
+// Whenever possible, the implementation tries to make the complexity of these
+// operations as close to constant-time as possible.
+// (So that performance is not impacted by the number of scheduled timers.)
+//
+// Object maps are kept which contain linked lists keyed by their duration in
+// milliseconds.
+//
+/* eslint-disable node-core/non-ascii-character */
+//
+// ╔════ > Object Map
+// ║
+// ╠══
+// ║ lists: { '40': { }, '320': { etc } } (keys of millisecond duration)
+// ╚══          ┌────┘
+//              │
+// ╔══          │
+// ║ TimersList { _idleNext: { }, _idlePrev: (self) }
+// ║         ┌────────────────┘
+// ║    ╔══  │                              ^
+// ║    ║    { _idleNext: { },  _idlePrev: { }, _onTimeout: (callback) }
+// ║    ║      ┌───────────┘
+// ║    ║      │                                  ^
+// ║    ║      { _idleNext: { etc },  _idlePrev: { }, _onTimeout: (callback) }
+// ╠══  ╠══
+// ║    ║
+// ║    ╚════ >  Actual JavaScript timeouts
+// ║
+// ╚════ > Linked List
+//
+/* eslint-enable node-core/non-ascii-character */
+//
+// With this, virtually constant-time insertion (append), removal, and timeout
+// is possible in the JavaScript layer. Any one list of timers is able to be
+// sorted by just appending to it because all timers within share the same
+// duration. Therefore, any timer added later will always have been scheduled to
+// timeout later, thus only needing to be appended.
+// Removal from an object-property linked list is also virtually constant-time
+// as can be seen in the lib/internal/linkedlist.js implementation.
+// Timeouts only need to process any timers currently due to expire, which will
+// always be at the beginning of the list for reasons stated above. Any timers
+// after the first one encountered that does not yet need to timeout will also
+// always be due to timeout at a later time.
+//
+// Less-than constant time operations are thus contained in two places:
+// The PriorityQueue — an efficient binary heap implementation that does all
+// operations in worst-case O(log n) time — which manages the order of expiring
+// Timeout lists and the object map lookup of a specific list by the duration of
+// timers within (or creation of a new list). However, these operations combined
+// have shown to be trivial in comparison to other timers architectures.
+
 const {
+  MathMax,
   MathTrunc,
+  NumberIsFinite,
+  NumberMIN_SAFE_INTEGER,
   ObjectCreate,
-  ObjectDefineProperty,
-  SymbolToPrimitive
+  ReflectApply,
+  Symbol,
 } = primordials;
 
 const {
+  scheduleTimer,
+  toggleTimerRef,
+  getLibuvNow,
   immediateInfo,
   toggleImmediateRef
 } = internalBinding('timers');
+
+const {
+  getDefaultTriggerAsyncId,
+  newAsyncId,
+  initHooksExist,
+  destroyHooksExist,
+  // The needed emit*() functions.
+  emitInit,
+  emitBefore,
+  emitAfter,
+  emitDestroy,
+} = require('internal/async_hooks');
+
+// Symbols for storing async id state.
+const async_id_symbol = Symbol('asyncId');
+const trigger_async_id_symbol = Symbol('triggerId');
+
+const kHasPrimitive = Symbol('kHasPrimitive');
+
+const {
+  ERR_OUT_OF_RANGE
+} = require('internal/errors').codes;
+const {
+  validateCallback,
+  validateNumber,
+} = require('internal/validators');
+
 const L = require('internal/linkedlist');
-const {
-  async_id_symbol,
-  Timeout,
-  Immediate,
-  decRefCount,
-  immediateInfoFields: {
-    kCount,
-    kRefCount
-  },
-  kRefed,
-  kHasPrimitive,
-  getTimerDuration,
-  timerListMap,
-  timerListQueue,
-  immediateQueue,
-  active,
-  unrefActive,
-  insert
-} = require('internal/timers');
-const {
-  promisify: { custom: customPromisify },
-  deprecate
-} = require('internal/util');
+const PriorityQueue = require('internal/priority_queue');
+
+const { inspect } = require('internal/util/inspect');
 let debug = require('internal/util/debuglog').debuglog('timer', (fn) => {
   debug = fn;
 });
-const { validateCallback } = require('internal/validators');
 
-let timersPromises;
+// *Must* match Environment::ImmediateInfo::Fields in src/env.h.
+const kCount = 0;
+const kRefCount = 1;
+const kHasOutstanding = 2;
 
-const {
-  destroyHooksExist,
-  // The needed emit*() functions.
-  emitDestroy
-} = require('internal/async_hooks');
+// Timeout values > TIMEOUT_MAX are set to 1.
+const TIMEOUT_MAX = 2 ** 31 - 1;
 
-// This stores all the known timer async ids to allow users to clearTimeout and
-// clearInterval using those ids, to match the spec and the rest of the web
-// platform.
-const knownTimersById = ObjectCreate(null);
+let timerListId = NumberMIN_SAFE_INTEGER;
 
-// Remove a timer. Cancels the timeout and resets the relevant timer properties.
-function unenroll(item) {
-  if (item._destroyed)
-    return;
+const kRefed = Symbol('refed');
 
-  item._destroyed = true;
+// Create a single linked list instance only once at startup
+const immediateQueue = new ImmediateList();
 
-  if (item[kHasPrimitive])
-    delete knownTimersById[item[async_id_symbol]];
+let nextExpiry = Infinity;
+let refCount = 0;
 
-  // Fewer checks may be possible, but these cover everything.
-  if (destroyHooksExist() && item[async_id_symbol] !== undefined)
-    emitDestroy(item[async_id_symbol]);
+// This is a priority queue with a custom sorting function that first compares
+// the expiry times of two lists and if they're the same then compares their
+// individual IDs to determine which list was created first.
+const timerListQueue = new PriorityQueue(compareTimersLists, setPosition);
 
-  L.remove(item);
+// Object map containing linked lists of timers, keyed and sorted by their
+// duration in milliseconds.
+//
+// - key = time in milliseconds
+// - value = linked list
+const timerListMap = ObjectCreate(null);
 
-  // We only delete refed lists because unrefed ones are incredibly likely
-  // to come from http and be recreated shortly after.
-  // TODO: Long-term this could instead be handled by creating an internal
-  // clearTimeout that makes it clear that the list should not be deleted.
-  // That function could then be used by http and other similar modules.
-  if (item[kRefed]) {
-    // Compliment truncation during insert().
-    const msecs = MathTrunc(item._idleTimeout);
-    const list = timerListMap[msecs];
-    if (list !== undefined && L.isEmpty(list)) {
-      debug('unenroll: list empty');
-      timerListQueue.removeAt(list.priorityQueuePosition);
-      delete timerListMap[list.msecs];
+function initAsyncResource(resource, type) {
+  const asyncId = resource[async_id_symbol] = newAsyncId();
+  const triggerAsyncId =
+    resource[trigger_async_id_symbol] = getDefaultTriggerAsyncId();
+  if (initHooksExist())
+    emitInit(asyncId, type, triggerAsyncId, resource);
+}
+
+// Timer constructor function.
+// The entire prototype is defined in lib/timers.js
+function Timeout(callback, after, args, isRepeat, isRefed) {
+  after *= 1; // Coalesce to number or NaN
+  if (!(after >= 1 && after <= TIMEOUT_MAX)) {
+    if (after > TIMEOUT_MAX) {
+      process.emitWarning(`${after} does not fit into` +
+                          ' a 32-bit signed integer.' +
+                          '\nTimeout duration was set to 1.',
+                          'TimeoutOverflowWarning');
     }
-
-    decRefCount();
+    after = 1; // Schedule on next tick, follows browser behavior
   }
 
-  // If active is called later, then we want to make sure not to insert again
-  item._idleTimeout = -1;
+  this._idleTimeout = after;
+  this._idlePrev = this;
+  this._idleNext = this;
+  this._idleStart = null;
+  // This must be set to null first to avoid function tracking
+  // on the hidden class, revisit in V8 versions after 6.2
+  this._onTimeout = null;
+  this._onTimeout = callback;
+  this._timerArgs = args;
+  this._repeat = isRepeat ? after : null;
+  this._destroyed = false;
+
+  if (isRefed)
+    incRefCount();
+  this[kRefed] = isRefed;
+  this[kHasPrimitive] = false;
+
+  initAsyncResource(this, 'Timeout');
 }
 
-// Make a regular object able to act as a timer by setting some properties.
-// This function does not start the timer, see `active()`.
-// Using existing objects as timers slightly reduces object overhead.
-function enroll(item, msecs) {
-  msecs = getTimerDuration(msecs, 'msecs');
+// Make sure the linked list only shows the minimal necessary information.
+Timeout.prototype[inspect.custom] = function(_, options) {
+  return inspect(this, {
+    ...options,
+    // Only inspect one level.
+    depth: 0,
+    // It should not recurse.
+    customInspect: false
+  });
+};
 
-  // If this item was already in a list somewhere
-  // then we should unenroll it from that
-  if (item._idleNext) unenroll(item);
+Timeout.prototype.refresh = function() {
+  if (this[kRefed])
+    active(this);
+  else
+    unrefActive(this);
 
-  L.init(item);
-  item._idleTimeout = msecs;
-}
-
-
-/*
- * DOM-style timers
- */
-
-function setTimeout(callback, after, arg1, arg2, arg3) {
-  validateCallback(callback);
-
-  let i, args;
-  switch (arguments.length) {
-    // fast cases
-    case 1:
-    case 2:
-      break;
-    case 3:
-      args = [arg1];
-      break;
-    case 4:
-      args = [arg1, arg2];
-      break;
-    default:
-      args = [arg1, arg2, arg3];
-      for (i = 5; i < arguments.length; i++) {
-        // Extend array dynamically, makes .apply run much faster in v6.0.0
-        args[i - 2] = arguments[i];
-      }
-      break;
-  }
-
-  const timeout = new Timeout(callback, after, args, false, true);
-  insert(timeout, timeout._idleTimeout);
-
-  return timeout;
-}
-
-ObjectDefineProperty(setTimeout, customPromisify, {
-  enumerable: true,
-  get() {
-    if (!timersPromises)
-      timersPromises = require('timers/promises');
-    return timersPromises.setTimeout;
-  }
-});
-
-function clearTimeout(timer) {
-  if (timer && timer._onTimeout) {
-    timer._onTimeout = null;
-    unenroll(timer);
-    return;
-  }
-  if (typeof timer === 'number' || typeof timer === 'string') {
-    const timerInstance = knownTimersById[timer];
-    if (timerInstance !== undefined) {
-      timerInstance._onTimeout = null;
-      unenroll(timerInstance);
-    }
-  }
-}
-
-function setInterval(callback, repeat, arg1, arg2, arg3) {
-  validateCallback(callback);
-
-  let i, args;
-  switch (arguments.length) {
-    // fast cases
-    case 1:
-    case 2:
-      break;
-    case 3:
-      args = [arg1];
-      break;
-    case 4:
-      args = [arg1, arg2];
-      break;
-    default:
-      args = [arg1, arg2, arg3];
-      for (i = 5; i < arguments.length; i++) {
-        // Extend array dynamically, makes .apply run much faster in v6.0.0
-        args[i - 2] = arguments[i];
-      }
-      break;
-  }
-
-  const timeout = new Timeout(callback, repeat, args, true, true);
-  insert(timeout, timeout._idleTimeout);
-
-  return timeout;
-}
-
-function clearInterval(timer) {
-  // clearTimeout and clearInterval can be used to clear timers created from
-  // both setTimeout and setInterval, as specified by HTML Living Standard:
-  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
-  clearTimeout(timer);
-}
-
-Timeout.prototype.close = function() {
-  clearTimeout(this);
   return this;
 };
 
-Timeout.prototype[SymbolToPrimitive] = function() {
-  const id = this[async_id_symbol];
-  if (!this[kHasPrimitive]) {
-    this[kHasPrimitive] = true;
-    knownTimersById[id] = this;
+Timeout.prototype.unref = function() {
+  if (this[kRefed]) {
+    this[kRefed] = false;
+    if (!this._destroyed)
+      decRefCount();
   }
-  return id;
+  return this;
 };
 
-function setImmediate(callback, arg1, arg2, arg3) {
-  validateCallback(callback);
-
-  let i, args;
-  switch (arguments.length) {
-    // fast cases
-    case 1:
-      break;
-    case 2:
-      args = [arg1];
-      break;
-    case 3:
-      args = [arg1, arg2];
-      break;
-    default:
-      args = [arg1, arg2, arg3];
-      for (i = 4; i < arguments.length; i++) {
-        // Extend array dynamically, makes .apply run much faster in v6.0.0
-        args[i - 1] = arguments[i];
-      }
-      break;
+Timeout.prototype.ref = function() {
+  if (!this[kRefed]) {
+    this[kRefed] = true;
+    if (!this._destroyed)
+      incRefCount();
   }
+  return this;
+};
 
-  return new Immediate(callback, args);
+Timeout.prototype.hasRef = function() {
+  return this[kRefed];
+};
+
+function TimersList(expiry, msecs) {
+  this._idleNext = this; // Create the list with the linkedlist properties to
+  this._idlePrev = this; // Prevent any unnecessary hidden class changes.
+  this.expiry = expiry;
+  this.id = timerListId++;
+  this.msecs = msecs;
+  this.priorityQueuePosition = null;
 }
 
-ObjectDefineProperty(setImmediate, customPromisify, {
-  enumerable: true,
-  get() {
-    if (!timersPromises)
-      timersPromises = require('timers/promises');
-    return timersPromises.setImmediate;
+// Make sure the linked list only shows the minimal necessary information.
+TimersList.prototype[inspect.custom] = function(_, options) {
+  return inspect(this, {
+    ...options,
+    // Only inspect one level.
+    depth: 0,
+    // It should not recurse.
+    customInspect: false
+  });
+};
+
+// A linked list for storing `setImmediate()` requests
+function ImmediateList() {
+  this.head = null;
+  this.tail = null;
+}
+
+// Appends an item to the end of the linked list, adjusting the current tail's
+// next pointer and the item's previous pointer where applicable
+ImmediateList.prototype.append = function(item) {
+  if (this.tail !== null) {
+    this.tail._idleNext = item;
+    item._idlePrev = this.tail;
+  } else {
+    this.head = item;
   }
-});
+  this.tail = item;
+};
 
+// Removes an item from the linked list, adjusting the pointers of adjacent
+// items and the linked list's head or tail pointers as necessary
+ImmediateList.prototype.remove = function(item) {
+  if (item._idleNext) {
+    item._idleNext._idlePrev = item._idlePrev;
+  }
 
-function clearImmediate(immediate) {
-  if (!immediate || immediate._destroyed)
+  if (item._idlePrev) {
+    item._idlePrev._idleNext = item._idleNext;
+  }
+
+  if (item === this.head)
+    this.head = item._idleNext;
+  if (item === this.tail)
+    this.tail = item._idlePrev;
+
+  item._idleNext = null;
+  item._idlePrev = null;
+};
+
+function incRefCount() {
+  if (refCount++ === 0)
+    toggleTimerRef(true);
+}
+
+function decRefCount() {
+  if (--refCount === 0)
+    toggleTimerRef(false);
+}
+
+// Schedule or re-schedule a timer.
+// The item must have been enroll()'d first.
+function active(item) {
+  insertGuarded(item, true);
+}
+
+// Internal APIs that need timeouts should use `unrefActive()` instead of
+// `active()` so that they do not unnecessarily keep the process open.
+function unrefActive(item) {
+  insertGuarded(item, false);
+}
+
+// The underlying logic for scheduling or re-scheduling a timer.
+//
+// Appends a timer onto the end of an existing timers list, or creates a new
+// list if one does not already exist for the specified timeout duration.
+function insertGuarded(item, refed, start) {
+  const msecs = item._idleTimeout;
+  if (msecs < 0 || msecs === undefined)
     return;
 
-  immediateInfo[kCount]--;
-  immediate._destroyed = true;
+  insert(item, msecs, start);
 
-  if (immediate[kRefed] && --immediateInfo[kRefCount] === 0)
-    toggleImmediateRef(false);
-  immediate[kRefed] = null;
-
-  if (destroyHooksExist() && immediate[async_id_symbol] !== undefined) {
-    emitDestroy(immediate[async_id_symbol]);
+  const isDestroyed = item._destroyed;
+  if (isDestroyed || !item[async_id_symbol]) {
+    item._destroyed = false;
+    initAsyncResource(item, 'Timeout');
   }
 
-  immediate._onImmediate = null;
+  if (isDestroyed) {
+    if (refed)
+      incRefCount();
+  } else if (refed === !item[kRefed]) {
+    if (refed)
+      incRefCount();
+    else
+      decRefCount();
+  }
+  item[kRefed] = refed;
+}
 
-  immediateQueue.remove(immediate);
+function insert(item, msecs, start = getLibuvNow()) {
+  // Truncate so that accuracy of sub-millisecond timers is not assumed.
+  msecs = MathTrunc(msecs);
+  item._idleStart = start;
+
+  // Use an existing list if there is one, otherwise we need to make a new one.
+  let list = timerListMap[msecs];
+  if (list === undefined) {
+    debug('no %d list was found in insert, creating a new one', msecs);
+    const expiry = start + msecs;
+    timerListMap[msecs] = list = new TimersList(expiry, msecs);
+    timerListQueue.insert(list);
+
+    if (nextExpiry > expiry) {
+      scheduleTimer(msecs);
+      nextExpiry = expiry;
+    }
+  }
+
+  L.append(list, item);
+}
+
+function setUnrefTimeout(callback, after) {
+  // Type checking identical to setTimeout()
+  validateCallback(callback);
+
+  const timer = new Timeout(callback, after, undefined, false, false);
+  insert(timer, timer._idleTimeout);
+
+  return timer;
+}
+
+// Type checking used by timers.enroll() and Socket#setTimeout()
+function getTimerDuration(msecs, name) {
+  validateNumber(msecs, name);
+  if (msecs < 0 || !NumberIsFinite(msecs)) {
+    throw new ERR_OUT_OF_RANGE(name, 'a non-negative finite number', msecs);
+  }
+
+  // Ensure that msecs fits into signed int32
+  if (msecs > TIMEOUT_MAX) {
+    process.emitWarning(`${msecs} does not fit into a 32-bit signed integer.` +
+                        `\nTimer duration was truncated to ${TIMEOUT_MAX}.`,
+                        'TimeoutOverflowWarning');
+    return TIMEOUT_MAX;
+  }
+
+  return msecs;
+}
+
+function compareTimersLists(a, b) {
+  const expiryDiff = a.expiry - b.expiry;
+  if (expiryDiff === 0) {
+    if (a.id < b.id)
+      return -1;
+    if (a.id > b.id)
+      return 1;
+  }
+  return expiryDiff;
+}
+
+function setPosition(node, pos) {
+  node.priorityQueuePosition = pos;
+}
+
+function getTimerCallbacks(runNextTicks) {
+  // If an uncaught exception was thrown during execution of immediateQueue,
+  // this queue will store all remaining Immediates that need to run upon
+  // resolution of all error handling (if process is still alive).
+  const outstandingQueue = new ImmediateList();
+
+  function processImmediate() {
+    const queue = outstandingQueue.head !== null ?
+      outstandingQueue : immediateQueue;
+    let immediate = queue.head;
+
+    // Clear the linked list early in case new `setImmediate()`
+    // calls occur while immediate callbacks are executed
+    if (queue !== outstandingQueue) {
+      queue.head = queue.tail = null;
+      immediateInfo[kHasOutstanding] = 1;
+    }
+
+    let prevImmediate;
+    let ranAtLeastOneImmediate = false;
+    while (immediate !== null) {
+      if (ranAtLeastOneImmediate)
+        runNextTicks();
+      else
+        ranAtLeastOneImmediate = true;
+
+      // It's possible for this current Immediate to be cleared while executing
+      // the next tick queue above, which means we need to use the previous
+      // Immediate's _idleNext which is guaranteed to not have been cleared.
+      if (immediate._destroyed) {
+        outstandingQueue.head = immediate = prevImmediate._idleNext;
+        continue;
+      }
+
+      immediate._destroyed = true;
+
+      immediateInfo[kCount]--;
+      if (immediate[kRefed])
+        immediateInfo[kRefCount]--;
+      immediate[kRefed] = null;
+
+      prevImmediate = immediate;
+
+      const asyncId = immediate[async_id_symbol];
+      emitBefore(asyncId, immediate[trigger_async_id_symbol], immediate);
+
+      try {
+        const argv = immediate._argv;
+        if (!argv)
+          immediate._onImmediate();
+        else
+          immediate._onImmediate(...argv);
+      } finally {
+        immediate._onImmediate = null;
+
+        if (destroyHooksExist())
+          emitDestroy(asyncId);
+
+        outstandingQueue.head = immediate = immediate._idleNext;
+      }
+
+      emitAfter(asyncId);
+    }
+
+    if (queue === outstandingQueue)
+      outstandingQueue.head = null;
+    immediateInfo[kHasOutstanding] = 0;
+  }
+
+
+  function processTimers(now) {
+    debug('process timer lists %d', now);
+    nextExpiry = Infinity;
+
+    let list;
+    let ranAtLeastOneList = false;
+    while (list = timerListQueue.peek()) {
+      if (list.expiry > now) {
+        nextExpiry = list.expiry;
+        return refCount > 0 ? nextExpiry : -nextExpiry;
+      }
+      if (ranAtLeastOneList)
+        runNextTicks();
+      else
+        ranAtLeastOneList = true;
+      listOnTimeout(list, now);
+    }
+    return 0;
+  }
+
+  function listOnTimeout(list, now) {
+    const msecs = list.msecs;
+
+    debug('timeout callback %d', msecs);
+
+    let ranAtLeastOneTimer = false;
+    let timer;
+    while (timer = L.peek(list)) {
+      const diff = now - timer._idleStart;
+
+      // Check if this loop iteration is too early for the next timer.
+      // This happens if there are more timers scheduled for later in the list.
+      if (diff < msecs) {
+        list.expiry = MathMax(timer._idleStart + msecs, now + 1);
+        list.id = timerListId++;
+        timerListQueue.percolateDown(1);
+        debug('%d list wait because diff is %d', msecs, diff);
+        return;
+      }
+
+      if (ranAtLeastOneTimer)
+        runNextTicks();
+      else
+        ranAtLeastOneTimer = true;
+
+      // The actual logic for when a timeout happens.
+      L.remove(timer);
+
+      const asyncId = timer[async_id_symbol];
+
+      if (!timer._onTimeout) {
+        if (!timer._destroyed) {
+          timer._destroyed = true;
+
+          if (timer[kRefed])
+            refCount--;
+
+          if (destroyHooksExist())
+            emitDestroy(asyncId);
+        }
+        continue;
+      }
+
+      emitBefore(asyncId, timer[trigger_async_id_symbol], timer);
+
+      let start;
+      if (timer._repeat)
+        start = getLibuvNow();
+
+      try {
+        const args = timer._timerArgs;
+        if (args === undefined)
+          timer._onTimeout();
+        else
+          ReflectApply(timer._onTimeout, timer, args);
+      } finally {
+        if (timer._repeat && timer._idleTimeout !== -1) {
+          timer._idleTimeout = timer._repeat;
+          insert(timer, timer._idleTimeout, start);
+        } else if (!timer._idleNext && !timer._idlePrev && !timer._destroyed) {
+          timer._destroyed = true;
+
+          if (timer[kRefed])
+            refCount--;
+
+          if (destroyHooksExist())
+            emitDestroy(asyncId);
+        }
+      }
+
+      emitAfter(asyncId);
+    }
+
+    // If `L.peek(list)` returned nothing, the list was either empty or we have
+    // called all of the timer timeouts.
+    // As such, we can remove the list from the object map and
+    // the PriorityQueue.
+    debug('%d list empty', msecs);
+
+    // The current list may have been removed and recreated since the reference
+    // to `list` was created. Make sure they're the same instance of the list
+    // before destroying.
+    if (list === timerListMap[msecs]) {
+      delete timerListMap[msecs];
+      timerListQueue.shift();
+    }
+  }
+
+  return {
+    processImmediate,
+    processTimers
+  };
+}
+
+class Immediate {
+  constructor(callback, args) {
+    this._idleNext = null;
+    this._idlePrev = null;
+    this._onImmediate = callback;
+    this._argv = args;
+    this._destroyed = false;
+    this[kRefed] = false;
+
+    initAsyncResource(this, 'Immediate');
+
+    this.ref();
+    immediateInfo[kCount]++;
+
+    immediateQueue.append(this);
+  }
+
+  ref() {
+    if (this[kRefed] === false) {
+      this[kRefed] = true;
+      if (immediateInfo[kRefCount]++ === 0)
+        toggleImmediateRef(true);
+    }
+    return this;
+  }
+
+  unref() {
+    if (this[kRefed] === true) {
+      this[kRefed] = false;
+      if (--immediateInfo[kRefCount] === 0)
+        toggleImmediateRef(false);
+    }
+    return this;
+  }
+
+  hasRef() {
+    return !!this[kRefed];
+  }
 }
 
 module.exports = {
-  setTimeout,
-  clearTimeout,
-  setImmediate,
-  clearImmediate,
-  setInterval,
-  clearInterval,
-  _unrefActive: deprecate(
-    unrefActive,
-    'timers._unrefActive() is deprecated.' +
-    ' Please use timeout.refresh() instead.',
-    'DEP0127'),
-  active: deprecate(
-    active,
-    'timers.active() is deprecated. Please use timeout.refresh() instead.',
-    'DEP0126'),
-  unenroll: deprecate(
-    unenroll,
-    'timers.unenroll() is deprecated. Please use clearTimeout instead.',
-    'DEP0096'),
-  enroll: deprecate(
-    enroll,
-    'timers.enroll() is deprecated. Please use setTimeout instead.',
-    'DEP0095')
+  TIMEOUT_MAX,
+  kTimeout: Symbol('timeout'), // For hiding Timeouts on other internals.
+  async_id_symbol,
+  trigger_async_id_symbol,
+  Timeout,
+  Immediate,
+  kRefed,
+  kHasPrimitive,
+  initAsyncResource,
+  setUnrefTimeout,
+  getTimerDuration,
+  immediateQueue,
+  getTimerCallbacks,
+  immediateInfoFields: {
+    kCount,
+    kRefCount,
+    kHasOutstanding
+  },
+  active,
+  unrefActive,
+  insert,
+  timerListMap,
+  timerListQueue,
+  decRefCount,
+  incRefCount
 };

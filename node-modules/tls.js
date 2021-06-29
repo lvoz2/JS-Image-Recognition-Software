@@ -1,352 +1,344 @@
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 'use strict';
 
 const {
-  Array,
   ArrayIsArray,
+  ArrayPrototypeFilter,
   ArrayPrototypeForEach,
-  ArrayPrototypeIncludes,
   ArrayPrototypeJoin,
   ArrayPrototypePush,
-  ArrayPrototypeReduce,
-  ArrayPrototypeSome,
-  ObjectDefineProperty,
-  ObjectFreeze,
-  ReflectConstruct,
-  RegExpPrototypeTest,
-  StringFromCharCode,
-  StringPrototypeCharCodeAt,
-  StringPrototypeEndsWith,
-  StringPrototypeIncludes,
-  StringPrototypeReplace,
+  StringPrototypeIndexOf,
   StringPrototypeSlice,
   StringPrototypeSplit,
   StringPrototypeStartsWith,
+  ObjectCreate,
 } = primordials;
 
 const {
-  ERR_TLS_CERT_ALTNAME_INVALID,
-  ERR_OUT_OF_RANGE
-} = require('internal/errors').codes;
-const internalUtil = require('internal/util');
-internalUtil.assertCrypto();
-const internalTLS = require('internal/tls');
-const { isArrayBufferView } = require('internal/util/types');
-
-const net = require('net');
-const { getOptionValue } = require('internal/options');
-const { getRootCertificates, getSSLCiphers } = internalBinding('crypto');
-const { Buffer } = require('buffer');
-const EventEmitter = require('events');
-const { URL } = require('internal/url');
-const DuplexPair = require('internal/streams/duplexpair');
-const { canonicalizeIP } = internalBinding('cares_wrap');
-const _tls_common = require('_tls_common');
-const _tls_wrap = require('_tls_wrap');
-
-// Allow {CLIENT_RENEG_LIMIT} client-initiated session renegotiations
-// every {CLIENT_RENEG_WINDOW} seconds. An error event is emitted if more
-// renegotiations are seen. The settings are applied to all remote client
-// connections.
-exports.CLIENT_RENEG_LIMIT = 3;
-exports.CLIENT_RENEG_WINDOW = 600;
-
-exports.DEFAULT_CIPHERS = getOptionValue('--tls-cipher-list');
-
-exports.DEFAULT_ECDH_CURVE = 'auto';
-
-if (getOptionValue('--tls-min-v1.0'))
-  exports.DEFAULT_MIN_VERSION = 'TLSv1';
-else if (getOptionValue('--tls-min-v1.1'))
-  exports.DEFAULT_MIN_VERSION = 'TLSv1.1';
-else if (getOptionValue('--tls-min-v1.2'))
-  exports.DEFAULT_MIN_VERSION = 'TLSv1.2';
-else if (getOptionValue('--tls-min-v1.3'))
-  exports.DEFAULT_MIN_VERSION = 'TLSv1.3';
-else
-  exports.DEFAULT_MIN_VERSION = 'TLSv1.2';
-
-if (getOptionValue('--tls-max-v1.3'))
-  exports.DEFAULT_MAX_VERSION = 'TLSv1.3';
-else if (getOptionValue('--tls-max-v1.2'))
-  exports.DEFAULT_MAX_VERSION = 'TLSv1.2';
-else
-  exports.DEFAULT_MAX_VERSION = 'TLSv1.3'; // Will depend on node version.
-
-
-exports.getCiphers = internalUtil.cachedResult(
-  () => internalUtil.filterDuplicateStrings(getSSLCiphers(), true)
-);
-
-let rootCertificates;
-
-function cacheRootCertificates() {
-  rootCertificates = ObjectFreeze(getRootCertificates());
-}
-
-ObjectDefineProperty(exports, 'rootCertificates', {
-  configurable: false,
-  enumerable: true,
-  get: () => {
-    // Out-of-line caching to promote inlining the getter.
-    if (!rootCertificates) cacheRootCertificates();
-    return rootCertificates;
+  codes: {
+    ERR_CRYPTO_CUSTOM_ENGINE_NOT_SUPPORTED,
+    ERR_INVALID_ARG_TYPE,
+    ERR_INVALID_ARG_VALUE,
   },
-});
+} = require('internal/errors');
 
-// Convert protocols array into valid OpenSSL protocols list
-// ("\x06spdy/2\x08http/1.1\x08http/1.0")
-function convertProtocols(protocols) {
-  const lens = new Array(protocols.length);
-  const buff = Buffer.allocUnsafe(ArrayPrototypeReduce(protocols, (p, c, i) => {
-    const len = Buffer.byteLength(c);
-    if (len > 255) {
-      throw new ERR_OUT_OF_RANGE('The byte length of the protocol at index ' +
-        `${i} exceeds the maximum length.`, '<= 255', len, true);
-    }
-    lens[i] = len;
-    return p + 1 + len;
-  }, 0));
+const {
+  isArrayBufferView,
+} = require('internal/util/types');
 
-  let offset = 0;
-  for (let i = 0, c = protocols.length; i < c; i++) {
-    buff[offset++] = lens[i];
-    buff.write(protocols[i], offset);
-    offset += lens[i];
-  }
+const {
+  validateInt32,
+  validateObject,
+  validateString,
+} = require('internal/validators');
 
-  return buff;
-}
+const {
+  toBuf,
+} = require('internal/crypto/util');
 
-exports.convertALPNProtocols = function convertALPNProtocols(protocols, out) {
-  // If protocols is Array - translate it into buffer
-  if (ArrayIsArray(protocols)) {
-    out.ALPNProtocols = convertProtocols(protocols);
-  } else if (isArrayBufferView(protocols)) {
-    // Copy new buffer not to be modified by user.
-    out.ALPNProtocols = Buffer.from(protocols);
-  }
-};
+const {
+  crypto: {
+    TLS1_2_VERSION,
+    TLS1_3_VERSION,
+  },
+} = internalBinding('constants');
 
-function unfqdn(host) {
-  return StringPrototypeReplace(host, /[.]$/, '');
-}
-
-// String#toLowerCase() is locale-sensitive so we use
-// a conservative version that only lowercases A-Z.
-function toLowerCase(c) {
-  return StringFromCharCode(32 + StringPrototypeCharCodeAt(c, 0));
-}
-
-function splitHost(host) {
-  return StringPrototypeSplit(
-    StringPrototypeReplace(unfqdn(host), /[A-Z]/g, toLowerCase),
-    '.'
-  );
-}
-
-function check(hostParts, pattern, wildcards) {
-  // Empty strings, null, undefined, etc. never match.
-  if (!pattern)
-    return false;
-
-  const patternParts = splitHost(pattern);
-
-  if (hostParts.length !== patternParts.length)
-    return false;
-
-  // Pattern has empty components, e.g. "bad..example.com".
-  if (ArrayPrototypeIncludes(patternParts, ''))
-    return false;
-
-  // RFC 6125 allows IDNA U-labels (Unicode) in names but we have no
-  // good way to detect their encoding or normalize them so we simply
-  // reject them.  Control characters and blanks are rejected as well
-  // because nothing good can come from accepting them.
-  const isBad = (s) => RegExpPrototypeTest(/[^\u0021-\u007F]/u, s);
-  if (ArrayPrototypeSome(patternParts, isBad))
-    return false;
-
-  // Check host parts from right to left first.
-  for (let i = hostParts.length - 1; i > 0; i -= 1) {
-    if (hostParts[i] !== patternParts[i])
-      return false;
-  }
-
-  const hostSubdomain = hostParts[0];
-  const patternSubdomain = patternParts[0];
-  const patternSubdomainParts = StringPrototypeSplit(patternSubdomain, '*');
-
-  // Short-circuit when the subdomain does not contain a wildcard.
-  // RFC 6125 does not allow wildcard substitution for components
-  // containing IDNA A-labels (Punycode) so match those verbatim.
-  if (patternSubdomainParts.length === 1 ||
-      StringPrototypeIncludes(patternSubdomain, 'xn--'))
-    return hostSubdomain === patternSubdomain;
-
-  if (!wildcards)
-    return false;
-
-  // More than one wildcard is always wrong.
-  if (patternSubdomainParts.length > 2)
-    return false;
-
-  // *.tld wildcards are not allowed.
-  if (patternParts.length <= 2)
-    return false;
-
-  const { 0: prefix, 1: suffix } = patternSubdomainParts;
-
-  if (prefix.length + suffix.length > hostSubdomain.length)
-    return false;
-
-  if (!StringPrototypeStartsWith(hostSubdomain, prefix))
-    return false;
-
-  if (!StringPrototypeEndsWith(hostSubdomain, suffix))
-    return false;
-
-  return true;
-}
-
-exports.checkServerIdentity = function checkServerIdentity(hostname, cert) {
-  const subject = cert.subject;
-  const altNames = cert.subjectaltname;
-  const dnsNames = [];
-  const uriNames = [];
-  const ips = [];
-
-  hostname = '' + hostname;
-
-  if (altNames) {
-    const splitAltNames = StringPrototypeSplit(altNames, ', ');
-    ArrayPrototypeForEach(splitAltNames, (name) => {
-      if (StringPrototypeStartsWith(name, 'DNS:')) {
-        ArrayPrototypePush(dnsNames, StringPrototypeSlice(name, 4));
-      } else if (StringPrototypeStartsWith(name, 'URI:')) {
-        const uri = new URL(StringPrototypeSlice(name, 4));
-
-        // TODO(bnoordhuis) Also use scheme.
-        ArrayPrototypePush(uriNames, uri.hostname);
-      } else if (StringPrototypeStartsWith(name, 'IP Address:')) {
-        ArrayPrototypePush(ips, canonicalizeIP(StringPrototypeSlice(name, 11)));
+// Example:
+// C=US\nST=CA\nL=SF\nO=Joyent\nOU=Node.js\nCN=ca1\nemailAddress=ry@clouds.org
+function parseCertString(s) {
+  const out = ObjectCreate(null);
+  ArrayPrototypeForEach(StringPrototypeSplit(s, '\n'), (part) => {
+    const sepIndex = StringPrototypeIndexOf(part, '=');
+    if (sepIndex > 0) {
+      const key = StringPrototypeSlice(part, 0, sepIndex);
+      const value = StringPrototypeSlice(part, sepIndex + 1);
+      if (key in out) {
+        if (!ArrayIsArray(out[key])) {
+          out[key] = [out[key]];
+        }
+        ArrayPrototypePush(out[key], value);
+      } else {
+        out[key] = value;
       }
-    });
-  }
-
-  let valid = false;
-  let reason = 'Unknown reason';
-
-  const hasAltNames =
-    dnsNames.length > 0 || ips.length > 0 || uriNames.length > 0;
-
-  hostname = unfqdn(hostname);  // Remove trailing dot for error messages.
-
-  if (net.isIP(hostname)) {
-    valid = ArrayPrototypeIncludes(ips, canonicalizeIP(hostname));
-    if (!valid)
-      reason = `IP: ${hostname} is not in the cert's list: ` +
-               ArrayPrototypeJoin(ips, ', ');
-    // TODO(bnoordhuis) Also check URI SANs that are IP addresses.
-  } else if (hasAltNames || subject) {
-    const hostParts = splitHost(hostname);
-    const wildcard = (pattern) => check(hostParts, pattern, true);
-
-    if (hasAltNames) {
-      const noWildcard = (pattern) => check(hostParts, pattern, false);
-      valid = ArrayPrototypeSome(dnsNames, wildcard) ||
-              ArrayPrototypeSome(uriNames, noWildcard);
-      if (!valid)
-        reason =
-          `Host: ${hostname}. is not in the cert's altnames: ${altNames}`;
-    } else {
-      // Match against Common Name only if no supported identifiers exist.
-      const cn = subject.CN;
-
-      if (ArrayIsArray(cn))
-        valid = ArrayPrototypeSome(cn, wildcard);
-      else if (cn)
-        valid = wildcard(cn);
-
-      if (!valid)
-        reason = `Host: ${hostname}. is not cert's CN: ${cn}`;
     }
-  } else {
-    reason = 'Cert is empty';
-  }
+  });
+  return out;
+}
 
-  if (!valid) {
-    return new ERR_TLS_CERT_ALTNAME_INVALID(reason, hostname, cert);
-  }
-};
+function getDefaultEcdhCurve() {
+  // We do it this way because DEFAULT_ECDH_CURVE can be
+  // changed by users, so we need to grab the current
+  // value, but we want the evaluation to be lazy.
+  return require('tls').DEFAULT_ECDH_CURVE || 'auto';
+}
 
+function getDefaultCiphers() {
+  // We do it this way because DEFAULT_CIPHERS can be
+  // changed by users, so we need to grab the current
+  // value, but we want the evaluation to be lazy.
+  return require('tls').DEFAULT_CIPHERS;
+}
 
-class SecurePair extends EventEmitter {
-  constructor(secureContext = exports.createSecureContext(),
-              isServer = false,
-              requestCert = !isServer,
-              rejectUnauthorized = false,
-              options = {}) {
-    super();
-    const { socket1, socket2 } = new DuplexPair();
+function addCACerts(context, certs, name) {
+  ArrayPrototypeForEach(certs, (cert) => {
+    validateKeyOrCertOption(name, cert);
+    context.addCACert(cert);
+  });
+}
 
-    this.server = options.server;
-    this.credentials = secureContext;
+function setCerts(context, certs, name) {
+  ArrayPrototypeForEach(certs, (cert) => {
+    validateKeyOrCertOption(name, cert);
+    context.setCert(cert);
+  });
+}
 
-    this.encrypted = socket1;
-    this.cleartext = new exports.TLSSocket(socket2, {
-      secureContext,
-      isServer,
-      requestCert,
-      rejectUnauthorized,
-      ...options
-    });
-    this.cleartext.once('secure', () => this.emit('secure'));
-  }
-
-  destroy() {
-    this.cleartext.destroy();
-    this.encrypted.destroy();
+function validateKeyOrCertOption(name, value) {
+  if (typeof value !== 'string' && !isArrayBufferView(value)) {
+    throw new ERR_INVALID_ARG_TYPE(
+      name,
+      [
+        'string',
+        'Buffer',
+        'TypedArray',
+        'DataView',
+      ],
+      value
+    );
   }
 }
 
+function setKey(context, key, passphrase, name) {
+  validateKeyOrCertOption(`${name}.key`, key);
+  if (passphrase != null)
+    validateString(passphrase, `${name}.passphrase`);
+  context.setKey(key, passphrase);
+}
 
-exports.parseCertString = internalUtil.deprecate(
-  internalTLS.parseCertString,
-  'tls.parseCertString() is deprecated. ' +
-  'Please use querystring.parse() instead.',
-  'DEP0076');
+function processCiphers(ciphers, name) {
+  ciphers = StringPrototypeSplit(ciphers || getDefaultCiphers(), ':');
 
-exports.createSecureContext = _tls_common.createSecureContext;
-exports.SecureContext = _tls_common.SecureContext;
-exports.TLSSocket = _tls_wrap.TLSSocket;
-exports.Server = _tls_wrap.Server;
-exports.createServer = _tls_wrap.createServer;
-exports.connect = _tls_wrap.connect;
+  const cipherList =
+    ArrayPrototypeJoin(
+      ArrayPrototypeFilter(
+        ciphers,
+        (cipher) => {
+          return cipher.length > 0 &&
+            !StringPrototypeStartsWith(cipher, 'TLS_');
+        }), ':');
 
-exports.createSecurePair = internalUtil.deprecate(
-  function createSecurePair(...args) {
-    return ReflectConstruct(SecurePair, args);
-  },
-  'tls.createSecurePair() is deprecated. Please use ' +
-  'tls.TLSSocket instead.', 'DEP0064');
+  const cipherSuites =
+    ArrayPrototypeJoin(
+      ArrayPrototypeFilter(
+        ciphers,
+        (cipher) => {
+          return cipher.length > 0 &&
+            StringPrototypeStartsWith(cipher, 'TLS_');
+        }), ':');
+
+  // Specifying empty cipher suites for both TLS1.2 and TLS1.3 is invalid, its
+  // not possible to handshake with no suites.
+  if (cipherSuites === '' && cipherList === '')
+    throw new ERR_INVALID_ARG_VALUE(name, ciphers);
+
+  return { cipherList, cipherSuites };
+}
+
+function configSecureContext(context, options = {}, name = 'options') {
+  validateObject(options, name);
+
+  const {
+    ca,
+    cert,
+    ciphers = getDefaultCiphers(),
+    clientCertEngine,
+    crl,
+    dhparam,
+    ecdhCurve = getDefaultEcdhCurve(),
+    key,
+    passphrase,
+    pfx,
+    privateKeyIdentifier,
+    privateKeyEngine,
+    sessionIdContext,
+    sessionTimeout,
+    sigalgs,
+    ticketKeys,
+  } = options;
+
+  // Add CA before the cert to be able to load cert's issuer in C++ code.
+  // NOTE(@jasnell): ca, cert, and key are permitted to be falsy, so do not
+  // change the checks to !== undefined checks.
+  if (ca) {
+    addCACerts(context, ArrayIsArray(ca) ? ca : [ca], `${name}.ca`);
+  } else {
+    context.addRootCerts();
+  }
+
+  if (cert) {
+    setCerts(context, ArrayIsArray(cert) ? cert : [cert], `${name}.cert`);
+  }
+
+  // Set the key after the cert.
+  // `ssl_set_pkey` returns `0` when the key does not match the cert, but
+  // `ssl_set_cert` returns `1` and nullifies the key in the SSL structure
+  // which leads to the crash later on.
+  if (key) {
+    if (ArrayIsArray(key)) {
+      for (let i = 0; i < key.length; ++i) {
+        const val = key[i];
+        // eslint-disable-next-line eqeqeq
+        const pem = (val != undefined && val.pem !== undefined ? val.pem : val);
+        setKey(context, pem, val.passphrase || passphrase, name);
+      }
+    } else {
+      setKey(context, key, passphrase, name);
+    }
+  }
+
+  if (sigalgs !== undefined) {
+    validateString(sigalgs, `${name}.sigalgs`);
+
+    if (sigalgs === '')
+      throw new ERR_INVALID_ARG_VALUE(`${name}.sigalgs`, sigalgs);
+
+    context.setSigalgs(sigalgs);
+  }
+
+  if (privateKeyIdentifier !== undefined) {
+    if (privateKeyEngine === undefined) {
+      // Engine is required when privateKeyIdentifier is present
+      throw new ERR_INVALID_ARG_VALUE(`${name}.privateKeyEngine`,
+                                      privateKeyEngine);
+    }
+    if (key) {
+      // Both data key and engine key can't be set at the same time
+      throw new ERR_INVALID_ARG_VALUE(`${name}.privateKeyIdentifier`,
+                                      privateKeyIdentifier);
+    }
+
+    if (typeof privateKeyIdentifier === 'string' &&
+        typeof privateKeyEngine === 'string') {
+      if (context.setEngineKey)
+        context.setEngineKey(privateKeyIdentifier, privateKeyEngine);
+      else
+        throw new ERR_CRYPTO_CUSTOM_ENGINE_NOT_SUPPORTED();
+    } else if (typeof privateKeyIdentifier !== 'string') {
+      throw new ERR_INVALID_ARG_TYPE(`${name}.privateKeyIdentifier`,
+                                     ['string', 'undefined'],
+                                     privateKeyIdentifier);
+    } else {
+      throw new ERR_INVALID_ARG_TYPE(`${name}.privateKeyEngine`,
+                                     ['string', 'undefined'],
+                                     privateKeyEngine);
+    }
+  }
+
+  if (ciphers != null)
+    validateString(ciphers, `${name}.ciphers`);
+
+  // Work around an OpenSSL API quirk. cipherList is for TLSv1.2 and below,
+  // cipherSuites is for TLSv1.3 (and presumably any later versions). TLSv1.3
+  // cipher suites all have a standard name format beginning with TLS_, so split
+  // the ciphers and pass them to the appropriate API.
+  const {
+    cipherList,
+    cipherSuites,
+  } = processCiphers(ciphers, `${name}.ciphers`);
+
+  context.setCipherSuites(cipherSuites);
+  context.setCiphers(cipherList);
+
+  if (cipherSuites === '' &&
+      context.getMaxProto() > TLS1_2_VERSION &&
+      context.getMinProto() < TLS1_3_VERSION) {
+    context.setMaxProto(TLS1_2_VERSION);
+  }
+
+  if (cipherList === '' &&
+      context.getMinProto() < TLS1_3_VERSION &&
+      context.getMaxProto() > TLS1_2_VERSION) {
+    context.setMinProto(TLS1_3_VERSION);
+  }
+
+  validateString(ecdhCurve, `${name}.ecdhCurve`);
+  context.setECDHCurve(ecdhCurve);
+
+  if (dhparam !== undefined) {
+    validateKeyOrCertOption(`${name}.dhparam`, dhparam);
+    const warning = context.setDHParam(dhparam);
+    if (warning)
+      process.emitWarning(warning, 'SecurityWarning');
+  }
+
+  if (crl !== undefined) {
+    if (ArrayIsArray(crl)) {
+      for (const val of crl) {
+        validateKeyOrCertOption(`${name}.crl`, val);
+        context.addCRL(val);
+      }
+    } else {
+      validateKeyOrCertOption(`${name}.crl`, crl);
+      context.addCRL(crl);
+    }
+  }
+
+  if (sessionIdContext !== undefined) {
+    validateString(sessionIdContext, `${name}.sessionIdContext`);
+    context.setSessionIdContext(sessionIdContext);
+  }
+
+  if (pfx !== undefined) {
+    if (ArrayIsArray(pfx)) {
+      ArrayPrototypeForEach(pfx, (val) => {
+        const raw = val.buf ? val.buf : val;
+        const pass = val.passphrase || passphrase;
+        if (pass !== undefined) {
+          context.loadPKCS12(toBuf(raw), toBuf(pass));
+        } else {
+          context.loadPKCS12(toBuf(raw));
+        }
+      });
+    } else if (passphrase) {
+      context.loadPKCS12(toBuf(pfx), toBuf(passphrase));
+    } else {
+      context.loadPKCS12(toBuf(pfx));
+    }
+  }
+
+  if (typeof clientCertEngine === 'string') {
+    if (typeof context.setClientCertEngine !== 'function')
+      throw new ERR_CRYPTO_CUSTOM_ENGINE_NOT_SUPPORTED();
+    else
+      context.setClientCertEngine(clientCertEngine);
+  } else if (clientCertEngine !== undefined) {
+    throw new ERR_INVALID_ARG_TYPE(`${name}.clientCertEngine`,
+                                   ['string', 'null', 'undefined'],
+                                   clientCertEngine);
+  }
+
+  if (ticketKeys !== undefined) {
+    if (!isArrayBufferView(ticketKeys)) {
+      throw new ERR_INVALID_ARG_TYPE(
+        `${name}.ticketKeys`,
+        ['Buffer', 'TypedArray', 'DataView'],
+        ticketKeys);
+    }
+    if (ticketKeys.byteLength !== 48) {
+      throw new ERR_INVALID_ARG_VALUE(
+        `${name}.ticketKeys`,
+        ticketKeys.byteLength,
+        'must be exactly 48 bytes');
+    }
+    context.setTicketKeys(ticketKeys);
+  }
+
+  if (sessionTimeout !== undefined) {
+    validateInt32(sessionTimeout, `${name}.sessionTimeout`);
+    context.setSessionTimeout(sessionTimeout);
+  }
+}
+
+module.exports = {
+  configSecureContext,
+  parseCertString,
+};
