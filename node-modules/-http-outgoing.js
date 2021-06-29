@@ -69,11 +69,11 @@ const {
     ERR_STREAM_DESTROYED
   },
   hideStackFrames
-} = require('internal/errors');
-const { validateString } = require('internal/validators');
-const { isUint8Array } = require('internal/util/types');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
+const { validateString } = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
+const { isUint8Array } = require('/JS-Image-Recognition-Software/node-modules/internal/util/types');
 
-let debug = require('internal/util/debuglog').debuglog('http', (fn) => {
+let debug = require('/JS-Image-Recognition-Software/node-modules/internal/util/debuglog').debuglog('http', (fn) => {
   debug = fn;
 });
 
