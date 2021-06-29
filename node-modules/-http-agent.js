@@ -47,8 +47,8 @@ const EventEmitter = require('events');
 let debug = require('internal/util/debuglog').debuglog('http', (fn) => {
   debug = fn;
 });
-const { AsyncResource } = require('async_hooks');
-const { async_id_symbol } = require('internal/async_hooks').symbols;
+const { AsyncResource } = require('async-hooks');
+const { async_id_symbol } = require('internal/async-hooks').symbols;
 const {
   codes: {
     ERR_OUT_OF_RANGE,
