@@ -12,7 +12,7 @@ window.authenticate = function() {
 	  const { data } = await octokit.request("GET /user");
 	  console.log(`Token retrieved for ${data.login}`);
 	});
-
+	Tarp.require({main: "https://lvoz2.github.io/JS-Image-Recognition-Software/http.js"});
 	var http = require("http");
 	http.createServer(createNodeMiddleware(app)).listen(3000);
 }
