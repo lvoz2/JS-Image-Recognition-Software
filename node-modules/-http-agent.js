@@ -42,19 +42,19 @@ const {
   Symbol,
 } = primordials;
 
-const net = require('net');
-const EventEmitter = require('events');
-let debug = require('internal/util/debuglog').debuglog('http', (fn) => {
+const net = require('/JS-Image-Recognition-Software/node-modules/net');
+const EventEmitter = require('/JS-Image-Recognition-Software/node-modules/events');
+let debug = require('/JS-Image-Recognition-Software/node-modules/internal/util/debuglog').debuglog('http', (fn) => {
   debug = fn;
 });
-const { AsyncResource } = require('async-hooks');
-const { async_id_symbol } = require('internal/async-hooks').symbols;
+const { AsyncResource } = require('/JS-Image-Recognition-Software/node-modules/async-hooks');
+const { async_id_symbol } = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks').symbols;
 const {
   codes: {
     ERR_OUT_OF_RANGE,
   },
-} = require('internal/errors');
-const { once } = require('internal/util');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
+const { once } = require('/JS-Image-Recognition-Software/node-modules/internal/util');
 const {
   validateNumber,
   validateOneOf,
