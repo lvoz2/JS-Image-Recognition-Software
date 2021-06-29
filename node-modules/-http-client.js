@@ -41,9 +41,9 @@ const {
   TypedArrayPrototypeSlice,
 } = primordials;
 
-const net = require('net');
-const assert = require('internal/assert');
-const { once } = require('internal/util');
+const net = require('/JS-Image-Recognition-Software/node-modules/net');
+const assert = require('/JS-Image-Recognition-Software/node-modules/internal/assert');
+const { once } = require('/JS-Image-Recognition-Software/node-modules/internal/util');
 const {
   _checkIsHttpToken: checkIsHttpToken,
   freeParser,
@@ -51,15 +51,15 @@ const {
   HTTPParser,
   isLenient,
   prepareError,
-} = require('_http_common');
-const { OutgoingMessage } = require('_http_outgoing');
-const { kDestroy } = require('internal/streams/destroy');
-const Agent = require('_http_agent');
-const { Buffer } = require('buffer');
-const { defaultTriggerAsyncIdScope } = require('internal/async_hooks');
-const { URL, urlToHttpOptions, searchParamsSymbol } = require('internal/url');
-const { kOutHeaders, kNeedDrain } = require('internal/http');
-const { connResetException, codes } = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/-http-common');
+const { OutgoingMessage } = require('/JS-Image-Recognition-Software/node-modules/-http-outgoing');
+const { kDestroy } = require('/JS-Image-Recognition-Software/node-modules/internal/streams/destroy');
+const Agent = require('/JS-Image-Recognition-Software/node-modules/-http-agent');
+const { Buffer } = require('/JS-Image-Recognition-Software/node-modules/buffer');
+const { defaultTriggerAsyncIdScope } = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks');
+const { URL, urlToHttpOptions, searchParamsSymbol } = require('/JS-Image-Recognition-Software/node-modules/internal/url');
+const { kOutHeaders, kNeedDrain } = require('/JS-Image-Recognition-Software/node-modules/internal/http');
+const { connResetException, codes } = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   ERR_HTTP_HEADERS_SENT,
   ERR_INVALID_ARG_TYPE,
@@ -69,16 +69,16 @@ const {
 } = codes;
 const {
   validateInteger,
-} = require('internal/validators');
-const { getTimerDuration } = require('internal/timers');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
+const { getTimerDuration } = require('/JS-Image-Recognition-Software/node-modules/internal/timers');
 const {
   DTRACE_HTTP_CLIENT_REQUEST,
   DTRACE_HTTP_CLIENT_RESPONSE
-} = require('internal/dtrace');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/dtrace');
 
-const { addAbortSignal, finished } = require('stream');
+const { addAbortSignal, finished } = require('/JS-Image-Recognition-Software/node-modules/stream');
 
-let debug = require('internal/util/debuglog').debuglog('http', (fn) => {
+let debug = require('/JS-Image-Recognition-Software/node-modules/internal/util/debuglog').debuglog('http', (fn) => {
   debug = fn;
 });
 
