@@ -30,10 +30,10 @@ const {
 } = primordials;
 
 const cares = internalBinding('cares_wrap');
-const { toASCII } = require('internal/idna');
-const { isIP } = require('internal/net');
-const { customPromisifyArgs } = require('internal/util');
-const errors = require('internal/errors');
+const { toASCII } = require('/JS-Image-Recognition-Software/node-modules/internal/idna');
+const { isIP } = require('/JS-Image-Recognition-Software/node-modules/internal/net');
+const { customPromisifyArgs } = require('/JS-Image-Recognition-Software/node-modules/internal/util');
+const errors = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   bindDefaultResolver,
   getDefaultResolver,
@@ -43,7 +43,7 @@ const {
   emitInvalidHostnameWarning,
   getDefaultVerbatim,
   setDefaultResultOrder,
-} = require('internal/dns/utils');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/dns/utils');
 const {
   ERR_INVALID_ARG_TYPE,
   ERR_INVALID_ARG_VALUE,
@@ -54,7 +54,7 @@ const {
   validatePort,
   validateString,
   validateOneOf,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 
 const {
   GetAddrInfoReqWrap,
@@ -333,7 +333,7 @@ ObjectDefineProperties(module.exports, {
     enumerable: true,
     get() {
       if (promises === null) {
-        promises = require('internal/dns/promises');
+        promises = require('/JS-Image-Recognition-Software/node-modules/internal/dns/promises');
         promises.setServers = defaultResolverSetServers;
         promises.setDefaultResultOrder = setDefaultResultOrder;
       }
