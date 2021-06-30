@@ -100,7 +100,7 @@ const {
   emitBefore,
   emitAfter,
   emitDestroy,
-} = require('internal/async_hooks');
+} = require('internal/async-hooks');
 
 // Symbols for storing async id state.
 const async_id_symbol = Symbol('asyncId');
