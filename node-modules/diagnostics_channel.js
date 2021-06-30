@@ -14,10 +14,10 @@ const {
   codes: {
     ERR_INVALID_ARG_TYPE,
   }
-} = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   validateFunction,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 
 const { triggerUncaughtException } = internalBinding('errors');
 
