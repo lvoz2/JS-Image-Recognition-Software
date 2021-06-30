@@ -20,6 +20,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 'use strict';
+window.global = this;
 window.primordials = require('primordials');
 const {
   ArrayPrototypeSlice,
