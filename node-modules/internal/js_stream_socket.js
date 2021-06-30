@@ -15,7 +15,7 @@ let debug = require('internal/util/debuglog').debuglog(
     debug = fn;
   }
 );
-const { owner_symbol } = require('internal/async_hooks').symbols;
+const { owner_symbol } = require('internal/async-hooks').symbols;
 const { ERR_STREAM_WRAP } = require('internal/errors').codes;
 
 const kCurrentWriteRequest = Symbol('kCurrentWriteRequest');
