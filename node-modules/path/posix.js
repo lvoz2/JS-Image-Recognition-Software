@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('path').posix;
+module.exports = require('/JS-Image-Recognition-Software/node-modules/path').posix;
