@@ -47,7 +47,7 @@ const {
   StringPrototypeStartsWith,
 } = primordials;
 
-const { Buffer } = require('buffer');
+const { Buffer } = require('/JS-Image-Recognition-Software/node-modules/buffer');
 const {
   codes: {
     ERR_AMBIGUOUS_ARGUMENT,
@@ -58,20 +58,20 @@ const {
   },
   isErrorStackTraceLimitWritable,
   overrideStackTrace,
-} = require('internal/errors');
-const AssertionError = require('internal/assert/assertion_error');
-const { openSync, closeSync, readSync } = require('fs');
-const { inspect } = require('internal/util/inspect');
-const { isPromise, isRegExp } = require('internal/util/types');
-const { EOL } = require('internal/constants');
-const { NativeModule } = require('internal/bootstrap/loaders');
-const { isError } = require('internal/util');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
+const AssertionError = require('/JS-Image-Recognition-Software/node-modules/internal/assert/assertion_error');
+const { openSync, closeSync, readSync } = require('/JS-Image-Recognition-Software/node-modules/fs');
+const { inspect } = require('/JS-Image-Recognition-Software/node-modules/internal/util/inspect');
+const { isPromise, isRegExp } = require('/JS-Image-Recognition-Software/node-modules/internal/util/types');
+const { EOL } = require('/JS-Image-Recognition-Software/node-modules/internal/constants');
+const { NativeModule } = require('/JS-Image-Recognition-Software/node-modules/internal/bootstrap/loaders');
+const { isError } = require('/JS-Image-Recognition-Software/node-modules/internal/util');
 
 const errorCache = new SafeMap();
-const CallTracker = require('internal/assert/calltracker');
+const CallTracker = require('/JS-Image-Recognition-Software/node-modules/internal/assert/calltracker');
 const {
   validateFunction,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 
 let isDeepEqual;
 let isDeepStrictEqual;
@@ -80,7 +80,7 @@ let findNodeAround;
 let decoder;
 
 function lazyLoadComparison() {
-  const comparison = require('internal/util/comparisons');
+  const comparison = require('/JS-Image-Recognition-Software/node-modules/internal/util/comparisons');
   isDeepEqual = comparison.isDeepEqual;
   isDeepStrictEqual = comparison.isDeepStrictEqual;
 }
@@ -243,15 +243,15 @@ function getCode(fd, line, column) {
 function parseCode(code, offset) {
   // Lazy load acorn.
   if (parseExpressionAt === undefined) {
-    const acorn = require('internal/deps/acorn/acorn/dist/acorn');
+    const acorn = require('/JS-Image-Recognition-Software/node-modules/internal/deps/acorn/acorn/dist/acorn');
     const privateMethods =
-      require('internal/deps/acorn-plugins/acorn-private-methods/index');
+      require('/JS-Image-Recognition-Software/node-modules/internal/deps/acorn-plugins/acorn-private-methods/index');
     const classFields =
-      require('internal/deps/acorn-plugins/acorn-class-fields/index');
+      require('/JS-Image-Recognition-Software/node-modules/internal/deps/acorn-plugins/acorn-class-fields/index');
     const staticClassFeatures =
-      require('internal/deps/acorn-plugins/acorn-static-class-features/index');
+      require('/JS-Image-Recognition-Software/node-modules/internal/deps/acorn-plugins/acorn-static-class-features/index');
 
-    ({ findNodeAround } = require('internal/deps/acorn/acorn-walk/dist/walk'));
+    ({ findNodeAround } = require('/JS-Image-Recognition-Software/node-modules/internal/deps/acorn/acorn-walk/dist/walk'));
 
     const Parser = acorn.Parser.extend(
       privateMethods,
@@ -340,7 +340,7 @@ function getErrMessage(message, fn) {
 
     if (filename) {
       if (decoder === undefined) {
-        const { StringDecoder } = require('string_decoder');
+        const { StringDecoder } = require('/JS-Image-Recognition-Software/node-modules/string_decoder');
         decoder = new StringDecoder('utf8');
       }
       fd = openSync(filename, 'r', 0o666);
