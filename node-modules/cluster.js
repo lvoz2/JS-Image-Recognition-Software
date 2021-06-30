@@ -22,4 +22,4 @@
 'use strict';
 
 const childOrPrimary = 'NODE_UNIQUE_ID' in process.env ? 'child' : 'primary';
-module.exports = require(`internal/cluster/${childOrPrimary}`);
+module.exports = require(`/JS-Image-Recognition-Software/node-modules/internal/cluster/${childOrPrimary}`);
