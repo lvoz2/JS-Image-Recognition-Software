@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('internal/util/types');
+module.exports = require('/JS-Image-Recognition-Software/node-modules/internal/util/types');
