@@ -7,19 +7,19 @@ const {
 
 const {
   addAbortSignalNoValidate,
-} = require('internal/streams/add-abort-signal');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/streams/add-abort-signal');
 
 const {
   validateAbortSignal,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 
 const {
   isIterable,
   isStream,
-} = require('internal/streams/utils');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/streams/utils');
 
-const pl = require('internal/streams/pipeline');
-const eos = require('internal/streams/end-of-stream');
+const pl = require('/JS-Image-Recognition-Software/node-modules/internal/streams/pipeline');
+const eos = require('/JS-Image-Recognition-Software/node-modules/internal/streams/end-of-stream');
 
 function pipeline(...streams) {
   return new Promise((resolve, reject) => {
