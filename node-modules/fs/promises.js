@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('internal/fs/promises').exports;
+module.exports = require('/JS-Image-Recognition-Software/node-modules/internal/fs/promises').exports;
