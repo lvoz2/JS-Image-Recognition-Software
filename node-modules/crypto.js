@@ -32,14 +32,14 @@ const {
 const {
   assertCrypto,
   deprecate
-} = require('internal/util');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util');
 assertCrypto();
 
 const {
   ERR_CRYPTO_FIPS_FORCED,
-} = require('internal/errors').codes;
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors').codes;
 const constants = internalBinding('constants').crypto;
-const { getOptionValue } = require('internal/options');
+const { getOptionValue } = require('/JS-Image-Recognition-Software/node-modules/internal/options');
 const pendingDeprecation = getOptionValue('--pending-deprecation');
 const fipsForced = getOptionValue('--force-fips');
 const {
@@ -57,37 +57,37 @@ const {
   randomFillSync,
   randomInt,
   randomUUID,
-} = require('internal/crypto/random');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/random');
 const {
   pbkdf2,
   pbkdf2Sync
-} = require('internal/crypto/pbkdf2');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/pbkdf2');
 const {
   scrypt,
   scryptSync
-} = require('internal/crypto/scrypt');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/scrypt');
 const {
   hkdf,
   hkdfSync
-} = require('internal/crypto/hkdf');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/hkdf');
 const {
   generateKeyPair,
   generateKeyPairSync,
   generateKey,
   generateKeySync,
-} = require('internal/crypto/keygen');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/keygen');
 const {
   createSecretKey,
   createPublicKey,
   createPrivateKey,
   KeyObject,
-} = require('internal/crypto/keys');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/keys');
 const {
   DiffieHellman,
   DiffieHellmanGroup,
   ECDH,
   diffieHellman
-} = require('internal/crypto/diffiehellman');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/diffiehellman');
 const {
   Cipher,
   Cipheriv,
@@ -98,20 +98,20 @@ const {
   publicDecrypt,
   publicEncrypt,
   getCipherInfo,
-} = require('internal/crypto/cipher');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/cipher');
 const {
   Sign,
   signOneShot,
   Verify,
   verifyOneShot
-} = require('internal/crypto/sig');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/sig');
 const {
   Hash,
   Hmac
-} = require('internal/crypto/hash');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/hash');
 const {
   X509Certificate
-} = require('internal/crypto/x509');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/x509');
 const {
   getCiphers,
   getCurves,
@@ -121,8 +121,8 @@ const {
   setEngine,
   lazyRequire,
   secureHeapUsed,
-} = require('internal/crypto/util');
-const Certificate = require('internal/crypto/certificate');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/util');
+const Certificate = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/certificate');
 
 // These helper functions are needed because the constructors can
 // use new, in which case V8 cannot inline the recursive constructor call
