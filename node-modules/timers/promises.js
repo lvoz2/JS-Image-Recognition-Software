@@ -11,18 +11,18 @@ const {
   Timeout,
   Immediate,
   insert
-} = require('internal/timers');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/timers');
 
 const {
   AbortError,
   codes: { ERR_INVALID_ARG_TYPE }
-} = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 
 const {
   validateAbortSignal,
   validateBoolean,
   validateObject,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 
 function cancelListenerHandler(clear, reject) {
   if (!this._destroyed) {
