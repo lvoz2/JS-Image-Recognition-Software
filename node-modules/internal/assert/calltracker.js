@@ -12,11 +12,11 @@ const {
   codes: {
     ERR_UNAVAILABLE_DURING_EXIT,
   },
-} = require('internal/errors');
-const AssertionError = require('internal/assert/assertion_error');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
+const AssertionError = require('/JS-Image-Recognition-Software/node-modules/internal/assert/assertion-error');
 const {
   validateUint32,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 
 const noop = FunctionPrototype;
 
