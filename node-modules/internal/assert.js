@@ -3,7 +3,7 @@
 let error;
 function lazyError() {
   if (!error) {
-    error = require('internal/errors').codes.ERR_INTERNAL_ASSERTION;
+    error = require('/JS-Image-Recognition-Software/node-modules/internal/errors').codes.ERR_INTERNAL_ASSERTION;
   }
   return error;
 }
