@@ -66,7 +66,7 @@ const {
     async_id_symbol,
     owner_symbol,
   },
-} = require('internal/async_hooks');
+} = require('internal/async-hooks');
 const {
   aggregateTwoErrors,
   codes: {
