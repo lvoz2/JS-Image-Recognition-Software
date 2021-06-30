@@ -166,7 +166,7 @@ let assert;
 let internalUtil = null;
 function lazyInternalUtil() {
   if (!internalUtil) {
-    internalUtil = require('internal/util');
+    internalUtil = require('/JS-Image-Recognition-Software/node-modules/internal/util');
   }
   return internalUtil;
 }
@@ -174,7 +174,7 @@ function lazyInternalUtil() {
 let internalUtilInspect = null;
 function lazyInternalUtilInspect() {
   if (!internalUtilInspect) {
-    internalUtilInspect = require('internal/util/inspect');
+    internalUtilInspect = require('/JS-Image-Recognition-Software/node-modules/internal/util/inspect');
   }
   return internalUtilInspect;
 }
@@ -182,7 +182,7 @@ function lazyInternalUtilInspect() {
 let buffer;
 function lazyBuffer() {
   if (buffer === undefined)
-    buffer = require('buffer').Buffer;
+    buffer = require('/JS-Image-Recognition-Software/node-modules/buffer').Buffer;
   return buffer;
 }
 
@@ -402,7 +402,7 @@ function E(sym, val, def, ...otherClasses) {
 function getMessage(key, args, self) {
   const msg = messages.get(key);
 
-  if (assert === undefined) assert = require('internal/assert');
+  if (assert === undefined) assert = require('/JS-Image-Recognition-Software/node-modules/internal/assert');
 
   if (typeof msg === 'function') {
     assert(
@@ -569,7 +569,7 @@ const errnoException = hideStackFrames(
     // getSystemErrorName(err) to guard against invalid arguments from users.
     // This can be replaced with [ code ] = errmap.get(err) when this method
     // is no longer exposed to user land.
-    if (util === undefined) util = require('util');
+    if (util === undefined) util = require('/JS-Image-Recognition-Software/node-modules/util');
     const code = util.getSystemErrorName(err);
     const message = original ?
       `${syscall} ${code} ${original}` : `${syscall} ${code}`;
@@ -603,7 +603,7 @@ const exceptionWithHostPort = hideStackFrames(
     // getSystemErrorName(err) to guard against invalid arguments from users.
     // This can be replaced with [ code ] = errmap.get(err) when this method
     // is no longer exposed to user land.
-    if (util === undefined) util = require('util');
+    if (util === undefined) util = require('/JS-Image-Recognition-Software/node-modules/util');
     const code = util.getSystemErrorName(err);
     let details = '';
     if (port && port > 0) {
@@ -767,7 +767,7 @@ const fatalExceptionStackEnhancers = {
     } = lazyInternalUtilInspect();
     const colors = useColors &&
                    ((internalBinding('util').guessHandleType(2) === 'TTY' &&
-                   require('internal/tty').hasColors()) ||
+                   require('/JS-Image-Recognition-Software/node-modules/internal/tty').hasColors()) ||
                    defaultColors);
     try {
       return inspect(error, {
@@ -1400,7 +1400,7 @@ E('ERR_REQUIRE_ESM',
   (filename, parentPath = null, packageJsonPath = null) => {
     let msg = `Must use import to load ES Module: ${filename}`;
     if (parentPath && packageJsonPath) {
-      const path = require('path');
+      const path = require('/JS-Image-Recognition-Software/node-modules/path');
       const basename = path.basename(filename) === path.basename(parentPath) ?
         filename : path.basename(filename);
       msg +=
