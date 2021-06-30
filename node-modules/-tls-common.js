@@ -21,7 +21,7 @@
 
 'use strict';
 
-const tls = require('tls');
+const tls = require('/JS-Image-Recognition-Software/node-modules/tls');
 
 const {
   ArrayPrototypePush,
@@ -34,7 +34,7 @@ const {
     ERR_TLS_INVALID_PROTOCOL_VERSION,
     ERR_TLS_PROTOCOL_VERSION_CONFLICT,
   },
-} = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 
 const {
   crypto: {
@@ -48,12 +48,12 @@ const {
 
 const {
   validateInteger,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 
 const {
   configSecureContext,
   parseCertString,
-} = require('internal/tls');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/tls');
 
 function toV(which, v, def) {
   if (v == null) v = def;
