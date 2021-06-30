@@ -67,7 +67,7 @@ const {
   destroyHooksExist,
   // The needed emit*() functions.
   emitDestroy
-} = require('internal/async_hooks');
+} = require('internal/async-hooks');
 
 // This stores all the known timer async ids to allow users to clearTimeout and
 // clearInterval using those ids, to match the spec and the rest of the web
