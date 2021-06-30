@@ -5,7 +5,6 @@
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -41,29 +40,29 @@ const {
 const {
   assertCrypto,
   deprecate
-} = require('internal/util');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util');
 
 assertCrypto();
 
-const { setImmediate } = require('timers');
-const assert = require('internal/assert');
-const crypto = require('crypto');
-const EE = require('events');
-const net = require('net');
-const tls = require('tls');
-const common = require('_tls_common');
-const JSStreamSocket = require('internal/js_stream_socket');
-const { Buffer } = require('buffer');
-let debug = require('internal/util/debuglog').debuglog('tls', (fn) => {
+const { setImmediate } = require('/JS-Image-Recognition-Software/node-modules/timers');
+const assert = require('/JS-Image-Recognition-Software/node-modules/internal/assert');
+const crypto = require('/JS-Image-Recognition-Software/node-modules/crypto');
+const EE = require('/JS-Image-Recognition-Software/node-modules/events');
+const net = require('/JS-Image-Recognition-Software/node-modules/net');
+const tls = require('/JS-Image-Recognition-Software/node-modules/tls');
+const common = require('/JS-Image-Recognition-Software/node-modules/-tls-common');
+const JSStreamSocket = require('/JS-Image-Recognition-Software/node-modules/internal/js-stream-socket');
+const { Buffer } = require('/JS-Image-Recognition-Software/node-modules/buffer');
+let debug = require('/JS-Image-Recognition-Software/node-modules/internal/util/debuglog').debuglog('tls', (fn) => {
   debug = fn;
 });
 const { TCP, constants: TCPConstants } = internalBinding('tcp_wrap');
 const tls_wrap = internalBinding('tls_wrap');
 const { Pipe, constants: PipeConstants } = internalBinding('pipe_wrap');
-const { owner_symbol } = require('internal/async_hooks').symbols;
-const { isArrayBufferView } = require('internal/util/types');
+const { owner_symbol } = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks').symbols;
+const { isArrayBufferView } = require('/JS-Image-Recognition-Software/node-modules/internal/util/types');
 const { SecureContext: NativeSecureContext } = internalBinding('crypto');
-const { connResetException, codes } = require('internal/errors');
+const { connResetException, codes } = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   ERR_INVALID_ARG_TYPE,
   ERR_INVALID_ARG_VALUE,
@@ -82,7 +81,7 @@ const { onpskexchange: kOnPskExchange } = internalBinding('symbols');
 const {
   getOptionValue,
   getAllowUnauthorized,
-} = require('internal/options');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/options');
 const {
   validateBoolean,
   validateBuffer,
@@ -93,13 +92,13 @@ const {
   validateObject,
   validateString,
   validateUint32,
-} = require('internal/validators');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
 const {
   InternalX509Certificate
-} = require('internal/crypto/x509');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/crypto/x509');
 const traceTls = getOptionValue('--trace-tls');
 const tlsKeylog = getOptionValue('--tls-keylog');
-const { appendFile } = require('fs');
+const { appendFile } = require('/JS-Image-Recognition-Software/node-modules/fs');
 const kConnectOptions = Symbol('connect-options');
 const kDisableRenegotiation = Symbol('disable-renegotiation');
 const kErrorEmitted = Symbol('error-emitted');
