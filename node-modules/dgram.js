@@ -32,12 +32,12 @@ const {
   ReflectApply,
 } = primordials;
 
-const errors = require('internal/errors');
+const errors = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   kStateSymbol,
   _createSocketHandle,
   newHandle,
-} = require('internal/dgram');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/dgram');
 const { guessHandleType } = internalBinding('util');
 const {
   ERR_INVALID_ARG_TYPE,
@@ -56,15 +56,15 @@ const {
   validateString,
   validateNumber,
   validatePort,
-} = require('internal/validators');
-const { Buffer } = require('buffer');
-const { deprecate } = require('internal/util');
-const { isArrayBufferView } = require('internal/util/types');
-const EventEmitter = require('events');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
+const { Buffer } = require('/JS-Image-Recognition-Software/node-modules/buffer');
+const { deprecate } = require('/JS-Image-Recognition-Software/node-modules/internal/util');
+const { isArrayBufferView } = require('/JS-Image-Recognition-Software/node-modules/internal/util/types');
+const EventEmitter = require('/JS-Image-Recognition-Software/node-modules/events');
 const {
   defaultTriggerAsyncIdScope,
   symbols: { async_id_symbol, owner_symbol }
-} = require('internal/async_hooks');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks');
 const { UV_UDP_REUSEADDR } = internalBinding('constants').os;
 
 const {
@@ -87,7 +87,7 @@ const SEND_BUFFER = false;
 // Lazily loaded
 let _cluster = null;
 function lazyLoadCluster() {
-  if (!_cluster) _cluster = require('cluster');
+  if (!_cluster) _cluster = require('/JS-Image-Recognition-Software/node-modules/cluster');
   return _cluster;
 }
 
