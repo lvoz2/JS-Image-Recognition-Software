@@ -33,7 +33,7 @@ const {
 const {
   defaultTriggerAsyncIdScope,
   symbols: { owner_symbol }
-} = require('internal/async_hooks');
+} = require('internal/async-hooks');
 
 const { toNamespacedPath } = require('path');
 
