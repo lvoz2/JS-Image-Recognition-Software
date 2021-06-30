@@ -181,7 +181,7 @@ if (credentials.implementsPosixCredentials) {
 // process. They use the same functions as the JS embedder API. These callbacks
 // are setup immediately to prevent async_wrap.setupHooks() from being hijacked
 // and the cost of doing so is negligible.
-const { nativeHooks } = require('internal/async_hooks');
+const { nativeHooks } = require('internal/async-hooks');
 internalBinding('async_wrap').setupHooks(nativeHooks);
 
 const {
