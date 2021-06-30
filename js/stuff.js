@@ -1,7 +1,7 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
 import { createOAuthAppAuth } from "https://cdn.skypack.dev/@octokit/auth-oauth-app";
 import { OAuthApp, createNodeMiddleware } from "https://cdn.skypack.dev/@octokit/oauth-app";
-var http = Tarp.require({main: "https://lvoz2.github.io/JS-Image-Recognition-Software/http.js"});
+window.http = Tarp.require({main: "https://lvoz2.github.io/JS-Image-Recognition-Software/http.js"});
 window.authenticate = function() {
 	const app = new OAuthApp({
 	  clientType: "oauth-app",
