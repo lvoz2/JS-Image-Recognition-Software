@@ -20,9 +20,9 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 window.global = this;
 window.process = {};
-require('internal/bootstrap/loaders.js');
 'use strict';
 window.primordials = require('primordials');
+require('internal/bootstrap/loaders.js');
 const {
   ArrayPrototypeSlice,
   ArrayPrototypeSort,
