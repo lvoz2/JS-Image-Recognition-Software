@@ -21,7 +21,7 @@ const {
   hasAsyncIdStack,
   afterHooksExist,
   emitAfter
-} = require('internal/async_hooks');
+} = require('internal/async-hooks');
 
 // shouldAbortOnUncaughtToggle is a typed array for faster
 // communication with JS.
