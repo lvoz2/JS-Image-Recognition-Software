@@ -155,7 +155,7 @@ function executionAsyncResource() {
 }
 
 function inspectExceptionValue(e) {
-  inspect ??= require('internal/util/inspect').inspect;
+  inspect ??= require('/JS-Image-Recognition-Software/node-modules/internal/util/inspect').inspect;
   return { message: inspect(e) };
 }
 
@@ -169,7 +169,7 @@ function fatalError(e) {
     process._rawDebug(o.stack);
   }
 
-  const { getOptionValue } = require('internal/options');
+  const { getOptionValue } = require('/JS-Image-Recognition-Software/node-modules/internal/options');
   if (getOptionValue('--abort-on-uncaught-exception')) {
     process.abort();
   }
