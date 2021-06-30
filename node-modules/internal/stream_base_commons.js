@@ -19,7 +19,7 @@ const { UV_EOF } = internalBinding('uv');
 const {
   errnoException
 } = require('internal/errors');
-const { owner_symbol } = require('internal/async_hooks').symbols;
+const { owner_symbol } = require('internal/async-hooks').symbols;
 const {
   kTimeout,
   setUnrefTimeout,
