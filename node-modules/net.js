@@ -70,7 +70,7 @@ const {
   newAsyncId,
   defaultTriggerAsyncIdScope,
   symbols: { async_id_symbol, owner_symbol }
-} = require('internal/async_hooks');
+} = require('internal/async-hooks');
 const {
   writevGeneric,
   writeGeneric,
