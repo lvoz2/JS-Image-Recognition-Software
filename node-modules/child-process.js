@@ -48,21 +48,21 @@ const {
   convertToValidSignal,
   createDeferredPromise,
   getSystemErrorName
-} = require('internal/util');
-const { isArrayBufferView } = require('internal/util/types');
-let debug = require('internal/util/debuglog').debuglog(
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util');
+const { isArrayBufferView } = require('/JS-Image-Recognition-Software/node-modules/internal/util/types');
+let debug = require('/JS-Image-Recognition-Software/node-modules/internal/util/debuglog').debuglog(
   'child_process',
   (fn) => {
     debug = fn;
   }
 );
-const { Buffer } = require('buffer');
+const { Buffer } = require('/JS-Image-Recognition-Software/node-modules/buffer');
 const { Pipe, constants: PipeConstants } = internalBinding('pipe_wrap');
 
 const {
   AbortError,
   codes: errorCodes,
-} = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 const {
   ERR_INVALID_ARG_VALUE,
   ERR_CHILD_PROCESS_IPC_REQUIRED,
@@ -70,16 +70,16 @@ const {
   ERR_INVALID_ARG_TYPE,
   ERR_OUT_OF_RANGE,
 } = errorCodes;
-const { clearTimeout, setTimeout } = require('timers');
-const { getValidatedPath } = require('internal/fs/utils');
+const { clearTimeout, setTimeout } = require('/JS-Image-Recognition-Software/node-modules/timers');
+const { getValidatedPath } = require('/JS-Image-Recognition-Software/node-modules/internal/fs/utils');
 const {
   isInt32,
   validateAbortSignal,
   validateBoolean,
   validateObject,
   validateString,
-} = require('internal/validators');
-const child_process = require('internal/child_process');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
+const child_process = require('/JS-Image-Recognition-Software/node-modules/internal/child_process');
 const {
   getValidStdio,
   setupChannel,
