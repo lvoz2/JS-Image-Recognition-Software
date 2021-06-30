@@ -41,14 +41,14 @@ const {
   Symbol,
 } = primordials;
 
-const EventEmitter = require('events');
+const EventEmitter = require('/JS-Image-Recognition-Software/node-modules/events');
 const {
   ERR_DOMAIN_CALLBACK_NOT_AVAILABLE,
   ERR_DOMAIN_CANNOT_SET_UNCAUGHT_EXCEPTION_CAPTURE,
   ERR_UNHANDLED_ERROR
-} = require('internal/errors').codes;
-const { createHook } = require('async_hooks');
-const { useDomainTrampoline } = require('internal/async_hooks');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors').codes;
+const { createHook } = require('/JS-Image-Recognition-Software/node-modules/async-hooks');
+const { useDomainTrampoline } = require('/JS-Image-Recognition-Software/node-modules/internal/async-hooks');
 
 // TODO(addaleax): Use a non-internal solution for this.
 const kWeak = Symbol('kWeak');
