@@ -27,8 +27,8 @@ const {
 const {
   pushAsyncContext,
   popAsyncContext,
-} = require('internal/async_hooks');
-const async_hooks = require('async_hooks');
+} = require('internal/async-hooks');
+const async_hooks = require('async-hooks');
 const { isErrorStackTraceLimitWritable } = require('internal/errors');
 
 // *Must* match Environment::TickInfo::Fields in src/env.h.
