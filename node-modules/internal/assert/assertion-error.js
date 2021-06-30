@@ -17,14 +17,14 @@ const {
   StringPrototypeSplit,
 } = primordials;
 
-const { inspect } = require('internal/util/inspect');
+const { inspect } = require('/JS-Image-Recognition-Software/node-modules/internal/util/inspect');
 const {
   removeColors,
-} = require('internal/util');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util');
 const {
   validateObject,
-} = require('internal/validators');
-const { isErrorStackTraceLimitWritable } = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/validators');
+const { isErrorStackTraceLimitWritable } = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 
 let blue = '';
 let green = '';
