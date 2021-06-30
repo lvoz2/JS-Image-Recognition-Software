@@ -18,16 +18,16 @@ const {
   EventTarget,
   Event,
   kTrustEvent
-} = require('internal/event_target');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/event_target');
 const {
   customInspectSymbol,
-} = require('internal/util');
-const { inspect } = require('internal/util/inspect');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/util');
+const { inspect } = require('/JS-Image-Recognition-Software/node-modules/internal/util/inspect');
 const {
   codes: {
     ERR_INVALID_THIS,
   }
-} = require('internal/errors');
+} = require('/JS-Image-Recognition-Software/node-modules/internal/errors');
 
 const kAborted = Symbol('kAborted');
 
