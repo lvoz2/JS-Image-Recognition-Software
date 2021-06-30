@@ -68,7 +68,7 @@ const {
   Buffer,
   kMaxLength
 } = require('buffer');
-const { owner_symbol } = require('internal/async_hooks').symbols;
+const { owner_symbol } = require('internal/async-hooks').symbols;
 const {
   validateFunction,
   validateNumber,
