@@ -21,4 +21,4 @@
 
 'use strict';
 
-module.exports = require('internal/console/global');
+module.exports = require('/JS-Image-Recognition-Software/node-modules/internal/console/global');
