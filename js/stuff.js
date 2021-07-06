@@ -17,6 +17,11 @@ window.authenticate = async function() {
 	});
 }
 window.sendNewData = async function() {
+	window.contents = octokit.rest.repos.getContent({
+		owner: 'lvoz2',
+		repo: 'JS-Image-Recognition-Software',
+		path: 'text.txt'
+	})
 	octokit.rest.repos.createOrUpdateFileContents({
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
