@@ -25,3 +25,6 @@ window.sendNewData = async function() {
 		content: 'Hey'
 	})
 }
+window.test = function() {
+	window.octokit = new Octokit({});
+}
