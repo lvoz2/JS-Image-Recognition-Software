@@ -22,6 +22,7 @@ window.sendNewData = async function() {
 		repo: 'JS-Image-Recognition-Software',
 		path: 'text.txt'
 	})
+	/*
 	octokit.rest.repos.createOrUpdateFileContents({
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
@@ -29,6 +30,7 @@ window.sendNewData = async function() {
 		message: 'Add new data',
 		content: 'Hey'
 	})
+	*/
 }
 window.test = function() {
 	window.octokit = new Octokit({});
