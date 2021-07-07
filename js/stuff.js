@@ -15,6 +15,16 @@ window.authenticate = async function() {
 		authStrategy: createOAuthAppAuth,
 		auth: userAuthenticationFromWebFlow
 	});
+	window.appOctokit = new Octokit({
+		authStrategy: createAppAuth,
+		auth: {
+			appId: 123,
+			privateKey: process.env.PRIVATE_KEY,
+			// optional: this will make appOctokit authenticate as app (JWT)
+			//           or installation (access token), depending on the request URL
+			installationId: 123,
+		},
+	});
 }
 window.sendNewData = async function() {
 	window.contents = octokit.rest.repos.getContent({
