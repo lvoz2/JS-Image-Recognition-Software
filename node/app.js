@@ -1,5 +1,5 @@
 const { OAuthApp, createNodeMiddleware } = require("@octokit/oauth-app");
-window.http = require('http');
+const http = require('http');
 const app = new OAuthApp({
   clientType: "oauth-app",
   clientId: "7415eb3be51e7222a91c",
