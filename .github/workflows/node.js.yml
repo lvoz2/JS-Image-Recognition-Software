@@ -23,4 +23,5 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
     - run: npm test
+    - run: npm install @octokit/oauth-app
     - run: node node/app.js
