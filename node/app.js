@@ -1,4 +1,4 @@
-import { OAuthApp, createNodeMiddleware } from "https://cdn.skypack.dev/@octokit/oauth-app";
+const { OAuthApp, createNodeMiddleware } = require("@octokit/oauth-app");
 window.http = require('http');
 const app = new OAuthApp({
   clientType: "oauth-app",
