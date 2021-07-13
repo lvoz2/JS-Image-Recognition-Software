@@ -10,4 +10,4 @@ app.on("token", async ({ token, octokit }) => {
   const { data } = await octokit.request("GET /user");
   console.log(`Token retrieved for ${data.login}`);
 });
-http.createServer(createNodeMiddleware(app)).listen(3000);
+// http.createServer(createNodeMiddleware(app)).listen(3000);
