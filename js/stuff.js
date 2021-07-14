@@ -6,10 +6,12 @@ window.windowAuth = function() {
 		// Do we trust the sender of this message?  (might be
 		// different from what we originally opened, for example).
 		console.log(event);
-		if (event.data !== "idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv") {
+		var checkloc = event.data.indexOf("=");
+		var check = event.data.slice(0, checkloc + 1);
+		if (event.data !== check) {
 			return 0;
 		}
-		var url = event.origin;
+		var url = event.data;
 		url = url.toString();
 		var codelocation = url.indexOf("=");
 		window.code = url.slice(codelocation + 1);
