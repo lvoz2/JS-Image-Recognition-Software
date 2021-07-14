@@ -1,7 +1,15 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 import { createOAuthAppAuth } from "https://cdn.skypack.dev/@octokit/auth-oauth-app";
 window.windowAuth = function() {
-	window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540")
+	var popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
+	window.addEventListener("message", (event) => {
+		// Do we trust the sender of this message?  (might be
+		// different from what we originally opened, for example).
+		if (event.origin !== "https://lvoz2.github.io/JS-Image-Recognition-Software/login/index.html")
+			return;
+		window.code = event.data;
+		popup.close()
+	}, false);
 }
 window.authenticate = async function() {
 	window.OAuth = createOAuthAppAuth({
