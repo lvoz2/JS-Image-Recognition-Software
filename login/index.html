@@ -1,1 +1,13 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		var url = document.location;
+		var codelocation = url.indexOf("=");
+		var code = url.slice(codelocation + 1);
+		window.opener.postMessage(code, window.location)
+	</script>
+</head>
+<body>
+</body>
+</html>
