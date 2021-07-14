@@ -8,7 +8,7 @@ window.windowAuth = function() {
 		console.log(event);
 		var checkloc = event.data.indexOf("=");
 		var check = event.data.slice(0, checkloc + 1);
-		if (event.data !== check) {
+		if ("idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv=" !== check) {
 			return 0;
 		}
 		var url = event.data;
