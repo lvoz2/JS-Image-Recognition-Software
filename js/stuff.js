@@ -1,5 +1,8 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 import { createOAuthAppAuth } from "https://cdn.skypack.dev/@octokit/auth-oauth-app";
+window.windowAuth = function() {
+	window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540")
+}
 window.authenticate = async function() {
 	window.OAuth = createOAuthAppAuth({
 		clientType: "oauth-app",
