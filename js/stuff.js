@@ -5,9 +5,13 @@ window.windowAuth = function() {
 	window.addEventListener("message", (event) => {
 		// Do we trust the sender of this message?  (might be
 		// different from what we originally opened, for example).
-		if (event.origin !== "https://lvoz2.github.io/JS-Image-Recognition-Software/login/index.html" || "https://lvoz2.github.io/JS-Image-Recognition-Software/login/")
+		if (event.data !== "idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv") {
 			return 0;
-		window.code = event.data;
+		}
+		var url = event.origin;
+		url = url.toString();
+		var codelocation = url.indexOf("=");
+		window.code = url.slice(codelocation + 1);
 		popup.close()
 	}, false);
 }
