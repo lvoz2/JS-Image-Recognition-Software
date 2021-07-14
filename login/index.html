@@ -2,7 +2,11 @@
 <html>
 <head>
 	<script>
-		window.opener.postMessage("idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv", window.location)
+		var url = window.location;
+		url = url.toString();
+		var codelocation = url.indexOf("=");
+		window.code = url.slice(codelocation + 1);
+		window.opener.postMessage("idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv=" + code, window.location)
 	</script>
 </head>
 <body>
