@@ -5,6 +5,7 @@ window.windowAuth = function() {
 	window.addEventListener("message", (event) => {
 		// Do we trust the sender of this message?  (might be
 		// different from what we originally opened, for example).
+		console.log(event);
 		if (event.data !== "idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv") {
 			return 0;
 		}
