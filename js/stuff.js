@@ -16,6 +16,14 @@ window.windowAuth = function() {
 		var codelocation = url.indexOf("=");
 		window.code = url.slice(codelocation + 1);
 		popup.close()
+		$.get('token.php?code=' + code, function (access_token) {
+			// Step 7
+			$('#access_token').val(access_token);
+
+			$.getJSON('https://api.github.com/user?access_token=' + access_token, function (user) {
+				$('#username').val(user.login);
+			});
+		});
 	}, false);
 }
 window.authenticate = async function() {
