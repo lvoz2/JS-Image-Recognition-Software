@@ -14,14 +14,12 @@ window.windowAuth = function() {
 		var url = event.data;
 		url = url.toString();
 		var codelocation = url.indexOf("=");
-		window.code = url.slice(codelocation + 1);
+		var code = url.slice(codelocation + 1);
 		popup.close()
-		$.get('token.php?code=' + code, function (access_token) {
+		$.get('http://jsirs.orgfree.com/token.php?code=' + code, function (access_token) {
 			// Step 7
-			$('#access_token').val(access_token);
-
 			$.getJSON('https://api.github.com/user?access_token=' + access_token, function (user) {
-				$('#username').val(user.login);
+				console.log(user.login);
 			});
 		});
 	}, false);
