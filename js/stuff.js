@@ -16,7 +16,7 @@ window.windowAuth = function() {
 		var codelocation = url.indexOf("=");
 		var code = url.slice(codelocation + 1);
 		popup.close()
-		$.get('http://jsirs.orgfree.com/token.php?code=' + code, function (access_token) {
+		$.get('https://lvoz2.github.io/JS-Image-Recognition-Software/token.php?code=' + code, function (access_token) {
 			// Step 7
 			$.getJSON('https://api.github.com/user?access_token=' + access_token, function (user) {
 				console.log(user.login);
