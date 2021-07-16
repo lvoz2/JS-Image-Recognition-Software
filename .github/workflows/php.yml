@@ -1,0 +1,4 @@
+name: Run PHP
+
+- name: Setup PHP environment
+  uses: nanasess/setup-php@v3.0.6
