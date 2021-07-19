@@ -18,7 +18,7 @@ window.windowAuth = function() {
 		popup.close()
 		$.get('https://staging.tm1explorers.com/token.php?code=' + code, function (access_token) {
 			// Step 7
-			$.getJSON('https://api.github.com/user?access_token=' + access_token, function (user) {
+			$.getJSON('https://cors-anywhere.herokuapp.com/https://api.github.com/user?access_token=' + access_token, function (user) {
 				console.log(user.login);
 			});
 		});
