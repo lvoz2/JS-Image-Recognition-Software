@@ -21,9 +21,9 @@ window.windowAuth = function() {
 			// Step 7
 			console.log(access_token.contents);
 			var token_loc_start = access_token.contents.indexOf("=");
-			var token_loc_end = access_token.contents.indexOf("&")
+			var token_loc_end = access_token.contents.indexOf("&");
 			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
-			console.log(token)
+			console.log(token);
 			var endpoint = 'https://api.github.com/user?access_token=' + token;
 			$.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(endpoint), function (user) {
 				console.log(user);
