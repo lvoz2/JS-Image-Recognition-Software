@@ -76,3 +76,15 @@ window.sendNewData = async function() {
 window.test = function() {
 	window.octokit = new Octokit({});
 }
+function redirect(requestDetails) {
+  console.log("Redirecting: " + requestDetails.url);
+  return {
+    redirectUrl: 'https://api.allorigins.win/get?url=' + encodeURIComponent(requestDetails.url)
+  };
+}
+
+browser.webRequest.onBeforeRequest.addListener(
+  redirect,
+  {urls:["https://api.github.com/", "https://github.com/"]},
+  ["blocking"]
+);
