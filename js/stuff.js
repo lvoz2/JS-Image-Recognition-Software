@@ -20,7 +20,7 @@ window.windowAuth = function() {
 		$.get('https://api.allorigins.win/get?url=' + encodeURIComponent(ghendpoint), function (access_token) {
 			// Step 7
 			console.log(access_token.contents);
-			var endpoint = 'https://api.github.com/user?access_token=' + access_token;
+			var endpoint = 'https://api.github.com/user?access_token=' + access_token.contents;
 			$.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(endpoint), function (user) {
 				console.log(user);
 			});
