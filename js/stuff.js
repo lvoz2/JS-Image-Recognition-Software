@@ -18,7 +18,7 @@ window.windowAuth = function() {
 		popup.close()
 		$.get('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token?client_id=7415eb3be51e7222a91c&client_secret=f43a1da2796648bb8f8d98a166ff3278d7843624&code=' + code, function (access_token) {
 			// Step 7
-			$.getJSON('https://cors-anywhere.herokuapp.com/https://api.github.com/user?access_token=' + access_token, function (user) {
+			$.getJSON('https://api.github.com/user?access_token=' + access_token, function (user) {
 				console.log(user.login);
 			});
 		});
