@@ -91,9 +91,3 @@ function redirect(requestDetails) {
     redirectUrl: 'https://api.allorigins.win/get?url=' + encodeURIComponent(requestDetails.url)
   };
 }
-
-browser.webRequest.onBeforeRequest.addListener(
-  redirect,
-  {urls:["https://api.github.com/", "https://github.com/"]},
-  ["blocking"]
-);
