@@ -7,10 +7,8 @@ function check(request) {
 	console.log(request.url);
 	var origin = request.url.slice(0, request.url.indexOf("m") + 1);
 	console.log(origin);
-	if (origin === ("https://api.github.com" || "https://github.com")) {
-		var url = encodeURIComponent(request.url);
-		request.url = "https://api.allorigins.win/get?url=" + url;
-		console.log(request.url);
-	}
+	var url = encodeURIComponent(request.url);
+	request.url = "https://api.allorigins.win/get?url=" + url;
+	console.log(request.url);
 	return fetch(request);
 }
