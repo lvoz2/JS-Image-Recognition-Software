@@ -34,7 +34,7 @@ window.windowAuth = function() {
 			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
 			var endpoint = 'https://api.github.com/';
-			get("GET", endpoint, ["Authorization"], [token])
+			get("GET", endpoint)
 		});
 	}, false);
 }
@@ -88,8 +88,10 @@ window.test = function() {
 window.get = function(method, url, headers_to_set, header_values) {
 	var xhr = new XMLHttpRequest();
 	xhr.open(method, "https://api.allorigins.win/get?url=" + encodeURIComponent(url));
-	for (var i = 0; i <= headers_to_set.length; i++) {
-		xhr.setRequestHeader(headers_to_set[i], header_values[i])
+	if (headers_to_set) {
+		for (var i = 0; i <= headers_to_set.length; i++) {
+			xhr.setRequestHeader(headers_to_set[i], header_values[i])
+		}
 	}
 	xhr.send()
 }
