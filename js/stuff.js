@@ -33,8 +33,10 @@ window.windowAuth = function() {
 			var token_loc_end = access_token.contents.indexOf("&");
 			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
-			var endpoint = 'https://api.github.com/user?access_token=' + token;
-			$.getJSON("https://api.allorigins.win/get?url=" + encodeURIComponent(endpoint), function (user) {
+			var endpoint = 'https://api.github.com/user';
+			$.getJSON("https://api.allorigins.win/get?url=" + encodeURIComponent(endpoint), {
+				"Authorization": token
+			},function (user) {
 				console.log(user);
 			});
 		});
@@ -83,11 +85,7 @@ window.sendNewData = async function() {
 	*/
 }
 window.test = function() {
-	window.octokit = new Octokit({});
-}
-function redirect(requestDetails) {
-  console.log("Redirecting: " + requestDetails.url);
-  return {
-    redirectUrl: 'https://api.allorigins.win/get?url=' + encodeURIComponent(requestDetails.url)
-  };
+	window.octokit = new Octokit({
+		auth: code
+	});
 }
