@@ -33,11 +33,8 @@ window.windowAuth = function() {
 			var token_loc_end = access_token.contents.indexOf("&");
 			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
-			var endpoint = 'https://api.github.com/';
-			$.getJSON("https://api.allorigins.win/get?url=" + encodeURIComponent(endpoint), {
-				Authorization: token
-			},function (user) {
-				console.log(user);
+			window.octokit = new Octokit({
+				auth: token
 			});
 		});
 	}, false);
