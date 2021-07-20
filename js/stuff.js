@@ -34,7 +34,7 @@ window.windowAuth = function() {
 			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
 			var endpoint = 'https://api.github.com/';
-			get("GET", endpoint)
+			console.log(get("GET", endpoint))
 		});
 	}, false);
 }
@@ -93,5 +93,5 @@ window.get = function(method, url, headers_to_set, header_values) {
 			xhr.setRequestHeader(headers_to_set[i], header_values[i])
 		}
 	}
-	xhr.send()
+	return xhr.send()
 }
