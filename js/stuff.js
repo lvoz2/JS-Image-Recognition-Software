@@ -33,9 +33,8 @@ window.windowAuth = function() {
 			var token_loc_end = access_token.contents.indexOf("&");
 			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
-			window.octokit = new Octokit({
-				auth: token
-			});
+			var endpoint = 'https://api.github.com/';
+			get("GET", endpoint, ["Authorization"], [token])
 		});
 	}, false);
 }
@@ -85,4 +84,12 @@ window.test = function() {
 	window.octokit = new Octokit({
 		auth: code
 	});
+}
+window.get = function(method, url, headers_to_set, header_values) {
+	var xhr = new XMLHttpRequest();
+	xhr.open(method, "https://api.allorigins.win/get?url=" + encodeURIComponent(url));
+	for (var i = 0; i <= headers_to_set.length; i++) {
+		xhr.setRequestHeader(headers_to_set[i], header_values[i])
+	}
+	xhr.send()
 }
