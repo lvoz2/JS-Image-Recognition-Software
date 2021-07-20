@@ -95,3 +95,10 @@ window.get = function(method, url, headers_to_set, header_values) {
 	}
 	return xhr.send()
 }
+window.fetchit = function(method, url) {
+	fetch(url, {
+		method: method,
+		mode: "no-cors"
+	})
+}
+		 
