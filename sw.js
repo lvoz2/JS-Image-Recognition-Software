@@ -10,9 +10,6 @@ function check(request) {
 		var url = encodeURIComponent(request.url);
 		request.url = "https://api.allorigins.win/get?url=" + url;
 		console.log(request.url);
-		fetch(request);
 	}
-	else {
-		fetch(request);
-	}
+	return fetch(request);
 }
