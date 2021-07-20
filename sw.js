@@ -2,7 +2,7 @@ self.addEventListener('fetch', function(event) {
 	event.respondWith(
 		check(event.request)
 	);
-});
+});z
 function check(request) {
 	console.log(request.url);
 	var origin = request.url.slice(0, request.url.indexOf("m") + 1);
