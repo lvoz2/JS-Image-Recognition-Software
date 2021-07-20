@@ -33,8 +33,8 @@ window.windowAuth = function() {
 			var token_loc_end = access_token.contents.indexOf("&");
 			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
-			var endpoint = 'https://api.github.com/';
-			console.log(get("GET", endpoint))
+			var endpoint = 'https://api.github.com/users/lvoz2';
+			fetch(endpoint);
 		});
 	}, false);
 }
