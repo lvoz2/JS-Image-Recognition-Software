@@ -8,7 +8,8 @@ function check(request) {
 	var origin = request.url.slice(0, request.url.indexOf("m") + 1);
 	console.log(origin);
 	var url = encodeURIComponent(request.url);
-	request.url = "https://api.allorigins.win/get?url=" + url;
+	url = "https://api.allorigins.win/get?url=" + url;
 	console.log(request.url);
-	return fetch(request);
+	var req = new Request(url);
+	return fetch(req);
 }
