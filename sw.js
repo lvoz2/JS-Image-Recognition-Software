@@ -7,9 +7,15 @@ function check(request) {
 	console.log(request.url);
 	var origin = request.url.slice(0, request.url.indexOf("m") + 1);
 	console.log(origin);
-	var url = encodeURIComponent(request.url);
-	url = "https://api.allorigins.win/get?url=" + url;
+	var scope = {};
+	if (origin == "https://api.github.com" || "https://github.com") {
+		scope.url = encodeURIComponent(request.url);
+		scope.url = "https://api.allorigins.win/get?url=" + scope.url;
+	}
+	else {
+		scope.url = request.url;
+	}
 	console.log(request.url);
-	var req = new Request(url);
+	var req = new Request(scope.url);
 	return fetch(req);
 }
