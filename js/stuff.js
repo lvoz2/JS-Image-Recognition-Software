@@ -35,7 +35,7 @@ window.windowAuth = function() {
 			console.log(token);
 			var endpoint = 'https://api.github.com/user';
 			$.getJSON("https://api.allorigins.win/get?url=" + encodeURIComponent(endpoint), {
-				"Authorization": token
+				Authorization: token
 			},function (user) {
 				console.log(user);
 			});
