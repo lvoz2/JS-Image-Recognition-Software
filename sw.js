@@ -9,12 +9,10 @@ function check(request) {
 	console.log(origin);
 	var scope = {};
 	if (origin == "https://api.github.com") {
-		scope.url = encodeURIComponent(request.url);
-		scope.url = "https://api.allorigins.win/get?url=" + scope.url;
+		scope.url = "https://keep-header-proxy.herokuapp.com/" + scope.url;
 	}
 	else if (origin == "https://github.com") {
-		scope.url = encodeURIComponent(request.url);
-		scope.url = "https://api.allorigins.win/get?url=" + scope.url;
+		scope.url = "https://keep-header-proxy.herokuapp.com/" + scope.url;
 	}
 	else {
 		scope.url = request.url;
