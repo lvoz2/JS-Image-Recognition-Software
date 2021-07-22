@@ -1,5 +1,4 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
-import { createOAuthAppAuth } from "https://cdn.skypack.dev/@octokit/auth-oauth-app";
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function() {
 		navigator.serviceWorker.register('sw.js').then(function(registration) {
