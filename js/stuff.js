@@ -26,7 +26,7 @@ window.windowAuth = function() {
 		var code = url.slice(codelocation + 1);
 		popup.close()
 		var ghendpoint = 'https://github.com/login/oauth/access_token?client_id=7415eb3be51e7222a91c&client_secret=f43a1da2796648bb8f8d98a166ff3278d7843624&code=' + code;
-		$.get("https://api.allorigins.win/get?url=" + encodeURIComponent(ghendpoint), function (access_token) {
+		$.get("https://keep-header-proxy.herokuapp.com/" + ghendpoint, function (access_token) {
 			// Step 7
 			console.log(access_token.contents);
 			var token_loc_start = access_token.contents.indexOf("=");
@@ -84,21 +84,5 @@ window.test = function() {
 	window.octokit = new Octokit({
 		auth: code
 	});
-}
-window.get = function(method, url, headers_to_set, header_values) {
-	var xhr = new XMLHttpRequest();
-	xhr.open(method, "https://api.allorigins.win/get?url=" + encodeURIComponent(url));
-	if (headers_to_set) {
-		for (var i = 0; i <= headers_to_set.length; i++) {
-			xhr.setRequestHeader(headers_to_set[i], header_values[i])
-		}
-	}
-	return xhr.send()
-}
-window.fetchit = function(method, url) {
-	fetch(url, {
-		method: method,
-		mode: "no-cors"
-	})
 }
 		 
