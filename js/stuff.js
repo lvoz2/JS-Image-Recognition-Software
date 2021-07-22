@@ -29,9 +29,9 @@ window.windowAuth = function() {
 		$.get("https://keep-header-proxy.herokuapp.com/" + ghendpoint, function (access_token) {
 			// Step 7
 			console.log(access_token);
-			var token_loc_start = access_token.contents.indexOf("=");
-			var token_loc_end = access_token.contents.indexOf("&");
-			var token = access_token.contents.slice(token_loc_start + 1, token_loc_end);
+			var token_loc_start = access_token.indexOf("=");
+			var token_loc_end = access_token.indexOf("&");
+			var token = access_token.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
 			var endpoint = 'https://api.github.com/users/lvoz2';
 			fetch(endpoint);
