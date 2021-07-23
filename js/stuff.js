@@ -61,26 +61,23 @@ window.sendNewData = async function(new_content) {
 		repo: 'JS-Image-Recognition-Software',
 		path: 'text.txt'
 	})
-	var scope = {};
 	contents.then(
 		function(value) {
-			scope.value = value;
+			var blob = value.data.sha;
+			var content = btoa(new_content);
+			octokit.rest.repos.createOrUpdateFileContents({
+				owner: 'lvoz2',
+				repo: 'JS-Image-Recognition-Software',
+				path: 'text.txt',
+				message: 'Add new data',
+				content: content,
+				sha: blob
+			});
 		},
 		function(error) {
-			scope.error = error;
+			console.error(error);
 		}
 	);
-	if (scope.value) {
-		var blob = scope.value.data.sha;
-		octokit.rest.repos.createOrUpdateFileContents({
-			owner: 'lvoz2',
-			repo: 'JS-Image-Recognition-Software',
-			path: 'text.txt',
-			message: 'Add new data',
-			content: btoa(new_content),
-			sha: blob
-		})
-	}
 }
 window.test = function() {
 	window.octokit = new Octokit({
