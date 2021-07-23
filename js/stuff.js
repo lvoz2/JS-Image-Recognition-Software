@@ -23,8 +23,9 @@ window.windowAuth = function() {
 			var token_loc_end = access_token.indexOf("&");
 			var token = access_token.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
-			var endpoint = 'https://api.github.com/users/lvoz2';
-			console.log(fetch(endpoint));
+			window.octokit = new Octokit({
+				auth: token
+			});
 		});
 	}, false);
 }
