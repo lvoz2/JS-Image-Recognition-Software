@@ -1,4 +1,4 @@
-import { Octokit } from "/@octokit/rest";
+import { Octokit } from "/@octokit/rest.js";
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function() {
 		navigator.serviceWorker.register('https://lvoz2.github.io/sw.js').then(function(registration) {
