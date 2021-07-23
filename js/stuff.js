@@ -1,13 +1,4 @@
 import { Octokit } from "/@octokit/rest.js";
-if ('serviceWorker' in navigator) {
-	window.addEventListener('load', function() {
-		navigator.serviceWorker.register('https://lvoz2.github.io/sw.js').then(function(registration) {
-			console.log('Service worker registered with scope: ', registration.scope);
-		}, function(err) {
-			console.log('ServiceWorker registration failed: ', err);
-		});
-	});
-}
 window.windowAuth = function() {
 	var popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
 	window.addEventListener("message", (event) => {
