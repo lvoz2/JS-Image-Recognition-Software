@@ -12,6 +12,11 @@
 			}
 		</style>
 		<script>
+			var fetch_temp = window.fetch;
+			window.fetch = function() {
+				console.log(arguments);
+				fetch_temp(arguments)
+			}
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', function() {
 					navigator.serviceWorker.register('https://lvoz2.github.io/sw.js').then(function(registration) {
