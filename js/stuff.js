@@ -1,5 +1,5 @@
 import { Octokit } from "/@octokit/rest.js";
-window.octokit;
+var octokit;
 window.windowAuth = function() {
 	var popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
 	window.addEventListener("message", (event) => {
@@ -30,32 +30,6 @@ window.windowAuth = function() {
 			return;
 		});
 	}, false);
-}
-window.authenticate = async function() {
-	window.OAuth = createOAuthAppAuth({
-		clientType: "oauth-app",
-		clientId: "7415eb3be51e7222a91c",
-		clientSecret: "f43a1da2796648bb8f8d98a166ff3278d7843624"
-	});
-	window.userAuthenticationFromWebFlow = await OAuth({
-		type: "oauth-user",
-		code: "random123",
-		state: "mystate123"
-	});
-	window.octokit = new Octokit({
-		authStrategy: createOAuthAppAuth,
-		auth: userAuthenticationFromWebFlow
-	});
-	window.appOctokit = new Octokit({
-		authStrategy: createAppAuth,
-		auth: {
-			appId: 123,
-			privateKey: process.env.PRIVATE_KEY,
-			// optional: this will make appOctokit authenticate as app (JWT)
-			//           or installation (access token), depending on the request URL
-			installationId: 123,
-		},
-	});
 }
 window.sendNewData = async function(new_content) {
 	if (octokit) {
