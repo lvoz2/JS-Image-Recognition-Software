@@ -15,7 +15,7 @@
 			var fetch_temp = window.fetch;
 			window.fetch = function() {
 				console.log(arguments);
-				fetch_temp(arguments)
+				return fetch_temp.apply(this, arguments);
 			}
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', function() {
