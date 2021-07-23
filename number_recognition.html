@@ -23,6 +23,8 @@
 				else if (origin == "https://github.com") {
 					arguments[0] = "https://keep-header-proxy.herokuapp.com/" + arguments[0];
 				}
+				console.log(this);
+				console.log(arguments);
 				return fetch_temp.apply(this, arguments);
 			}
 			if ('serviceWorker' in navigator) {
