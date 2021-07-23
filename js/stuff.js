@@ -44,7 +44,11 @@ window.sendNewData = async function(new_content) {
 					path: 'text.txt',
 					message: 'Add new data',
 					content: content,
-					sha: blob
+					sha: blob,
+					commiter: {
+						name: 'lvoz2',
+						email: 'lv_oz2@icloud.com'
+					}
 				});
 			},
 			function(error) {
