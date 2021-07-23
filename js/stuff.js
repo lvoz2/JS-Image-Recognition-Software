@@ -26,6 +26,7 @@ window.windowAuth = function() {
 			window.octokit = new Octokit({
 				auth: token
 			});
+			return;
 		});
 	}, false);
 }
