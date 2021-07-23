@@ -15,8 +15,8 @@
 			var fetch_temp = window.fetch;
 			window.fetch = function() {
 				if (arguments[0]) {
-					var origin = arguments[0].slice(0, arguments[0].indexOf("m") + 1);
-					console.log(origin);
+					var url = arguments[0].toString()
+					var origin = url.slice(0, url.indexOf("m") + 1);
 					if (origin == "https://api.github.com") {
 						arguments[0] = "https://keep-header-proxy.herokuapp.com/" + arguments[0];
 					}
