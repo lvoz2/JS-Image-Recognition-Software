@@ -56,28 +56,34 @@ window.authenticate = async function() {
 	});
 }
 window.sendNewData = async function(new_content) {
-	var contents = octokit.rest.repos.getContent({
-		owner: 'lvoz2',
-		repo: 'JS-Image-Recognition-Software',
-		path: 'text.txt'
-	})
-	contents.then(
-		function(value) {
-			var blob = value.data.sha;
-			var content = btoa(new_content);
-			octokit.rest.repos.createOrUpdateFileContents({
-				owner: 'lvoz2',
-				repo: 'JS-Image-Recognition-Software',
-				path: 'text.txt',
-				message: 'Add new data',
-				content: content,
-				sha: blob
-			});
-		},
-		function(error) {
-			console.error(error);
-		}
-	);
+	if (octokit) {
+		var contents = octokit.rest.repos.getContent({
+			owner: 'lvoz2',
+			repo: 'JS-Image-Recognition-Software',
+			path: 'text.txt'
+		})
+		contents.then(
+			function(value) {
+				var blob = value.data.sha;
+				var content = btoa(new_content);
+				octokit.rest.repos.createOrUpdateFileContents({
+					owner: 'lvoz2',
+					repo: 'JS-Image-Recognition-Software',
+					path: 'text.txt',
+					message: 'Add new data',
+					content: content,
+					sha: blob
+				});
+			},
+			function(error) {
+				console.error(error);
+			}
+		);
+	}
+	else {
+		await windowAuth()
+		sendNewData(new_content)
+	}
 }
 window.test = function() {
 	window.octokit = new Octokit({
