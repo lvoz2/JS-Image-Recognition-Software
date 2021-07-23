@@ -15,6 +15,14 @@
 			var fetch_temp = window.fetch;
 			window.fetch = function() {
 				console.log(arguments);
+				var origin = arguments[0].slice(0, arguments[0].indexOf("m") + 1);
+				console.log(origin);
+				if (origin == "https://api.github.com") {
+					arguments[0] = "https://keep-header-proxy.herokuapp.com/" + arguments[0];
+				}
+				else if (origin == "https://github.com") {
+					arguments[0] = "https://keep-header-proxy.herokuapp.com/" + arguments[0];
+				}
 				arguments[0] = "https://keep-header-proxy.herokuapp.com/" + arguments[0];
 				return fetch_temp.apply(this, arguments);
 			}
