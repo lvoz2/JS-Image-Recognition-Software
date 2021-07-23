@@ -55,21 +55,32 @@ window.authenticate = async function() {
 		},
 	});
 }
-window.sendNewData = async function() {
-	window.contents = octokit.rest.repos.getContent({
+window.sendNewData = async function(new_content) {
+	var contents = octokit.rest.repos.getContent({
 		owner: 'lvoz2',
 		repo: 'JS-Image-Recognition-Software',
 		path: 'text.txt'
 	})
-	/*
-	octokit.rest.repos.createOrUpdateFileContents({
-		owner: 'lvoz2',
-		repo: 'JS-Image-Recognition-Software',
-		path: 'text.txt',
-		message: 'Add new data',
-		content: 'Hey'
-	})
-	*/
+	var scope = {};
+	contents.then(
+		function(value) {
+			scope.value = value;
+		},
+		function(error) {
+			scope.error = error;
+		}
+	);
+	if (scope.value) {
+		var blob = scope.value.data.sha;
+		octokit.rest.repos.createOrUpdateFileContents({
+			owner: 'lvoz2',
+			repo: 'JS-Image-Recognition-Software',
+			path: 'text.txt',
+			message: 'Add new data',
+			content: btoa(new_content),
+			sha: blob
+		})
+	}
 }
 window.test = function() {
 	window.octokit = new Octokit({
