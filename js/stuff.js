@@ -37,7 +37,7 @@ window.sendNewData = async function(new_content) {
 		contents.then(
 			function(value) {
 				var blob = value.data.sha;
-				var content = btoa(new_content);
+				var content = btoa(new_content.toString());
 				octokit.rest.repos.createOrUpdateFileContents({
 					owner: 'lvoz2',
 					repo: 'JS-Image-Recognition-Software',
