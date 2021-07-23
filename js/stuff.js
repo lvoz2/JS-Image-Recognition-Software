@@ -1,7 +1,7 @@
-import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
+import { Octokit } from "/@octokit/rest";
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', function() {
-		navigator.serviceWorker.register('sw.js').then(function(registration) {
+		navigator.serviceWorker.register('https://lvoz2.github.io/sw.js').then(function(registration) {
 			console.log('Service worker registered with scope: ', registration.scope);
 		}, function(err) {
 			console.log('ServiceWorker registration failed: ', err);
