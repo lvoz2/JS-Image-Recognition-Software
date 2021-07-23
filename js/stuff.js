@@ -1,4 +1,5 @@
 import { Octokit } from "/@octokit/rest.js";
+window.octokit;
 window.windowAuth = function() {
 	var popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
 	window.addEventListener("message", (event) => {
@@ -23,7 +24,7 @@ window.windowAuth = function() {
 			var token_loc_end = access_token.indexOf("&");
 			var token = access_token.slice(token_loc_start + 1, token_loc_end);
 			console.log(token);
-			window.octokit = new Octokit({
+			octokit = new Octokit({
 				auth: token
 			});
 			return;
