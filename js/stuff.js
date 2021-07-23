@@ -1,6 +1,6 @@
 import { Octokit } from "/@octokit/rest.js";
 var octokit;
-window.windowAuth = function() {
+window.windowAuth = function(callback, param) {
 	var popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
 	window.addEventListener("message", (event) => {
 		// Do we trust the sender of this message?  (might be
@@ -27,7 +27,9 @@ window.windowAuth = function() {
 			octokit = new Octokit({
 				auth: token
 			});
-			return;
+			if (callback) {
+				callback(param)
+			}
 		});
 	}, false);
 }
@@ -57,8 +59,7 @@ window.sendNewData = async function(new_content) {
 		);
 	}
 	else {
-		await windowAuth()
-		sendNewData(new_content)
+		windowAuth(sendNewData, new_content)
 	}
 }
 window.test = function() {
