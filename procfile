@@ -1,3 +1,0 @@
-web: npm install
-web: npm run build --if-present
-web: npm test
