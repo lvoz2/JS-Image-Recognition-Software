@@ -2,7 +2,9 @@ import { Octokit } from "/@octokit/rest.js";
 var octokit;
 window.windowAuth = function(callback, param) {
 	var popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
+	console.log(popup);
 	window.addEventListener("message", (event) => {
+		console.log(popup);
 		var checkloc = event.data.indexOf("=");
 		var check = event.data.slice(0, checkloc + 1);
 		if ("idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv=" !== check) {
