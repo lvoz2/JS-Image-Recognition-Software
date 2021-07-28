@@ -1,1 +1,1 @@
-goodbye
+say hello
