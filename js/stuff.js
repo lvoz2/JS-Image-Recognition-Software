@@ -1,10 +1,11 @@
 import { Octokit } from "/@octokit/rest.js";
 var octokit;
+var scope = {};
 window.windowAuth = function(callback, param) {
-	var popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
-	console.log(popup);
+	scope.popup = window.open("https://github.com/login/oauth/authorize?client_id=7415eb3be51e7222a91c&scope=repo", "", "width=960,height=540");
+	console.log(scope.popup);
 	window.addEventListener("message", (event) => {
-		console.log(popup);
+		console.log(scope.popup);
 		var checkloc = event.data.indexOf("=");
 		var check = event.data.slice(0, checkloc + 1);
 		if ("idbfwhbwaidhglhjgllbrhwvurjkghdahsjgufhvbawufghksjhdgauysfbvqywurbvquywbvuwqdv=" !== check) {
@@ -14,7 +15,7 @@ window.windowAuth = function(callback, param) {
 		url = url.toString();
 		var codelocation = url.indexOf("=");
 		var code = url.slice(codelocation + 1);
-		popup.close()
+		scope.popup.close()
 		var ghendpoint = 'https://github.com/login/oauth/access_token?client_id=7415eb3be51e7222a91c&client_secret=f43a1da2796648bb8f8d98a166ff3278d7843624&code=' + code;
 		$.get("https://keep-header-proxy.herokuapp.com/" + ghendpoint, function (access_token) {
 			var token_loc_start = access_token.indexOf("=");
