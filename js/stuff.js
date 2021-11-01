@@ -103,5 +103,9 @@ window.submit = function() {
 	if (yvalues.hasOwnProperty(new_id) === false) {
 		yvalues[new_id] = {'1': valuesy};
 	}
+	var sendx = JSON.stringify(xvalues);
+	var sendy = JSON.stringify(yvalues);
+	var sendmsg = "window.xvalues = " + sendx + ", " + "window.yvalues = " + sendy + ";";
+	sendNewData(sendmsg);
 }
 		 
