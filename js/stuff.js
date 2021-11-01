@@ -64,7 +64,7 @@ window.sendNewData = async function(new_content) {
 	}
 }
 window.load = function(url, type) {
-	var xhr = new XHttpRequest();
+	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
 	xhr.onload = function() {
 		console.log(this.responseXML);
