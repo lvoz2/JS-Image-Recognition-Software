@@ -76,13 +76,13 @@ window.submit = function() {
 	var new_id = document.getElementById("new_layout").value;
 	createnewdataset()
 	if (xvalues.hasOwnProperty(new_id) === false) {
-		xvalues[new_id] = valuesx;
+		xvalues[new_id] = {'1': valuesx};
 	}
 	if (yvalues.hasOwnProperty(new_id) === false) {
-		yvalues[new_id] = valuesy;
+		yvalues[new_id] = '1': valuesy};
 	}
-	var check = false;
 	if (xvalues.hasOwnProperty(new_id) === true) {
+		var check = false;
 		for (var id = 1; check === false;) {
 			if (xvalues[new_id].hasOwnProperty(id) === false) {
 				check = true;			}
@@ -90,7 +90,18 @@ window.submit = function() {
 				id++
 			}
 		}
-		console.log(id);
+		xvalues[new_id][id] = valuesx;
+	}
+	if (yvalues.hasOwnProperty(new_id) === true) {
+		var check = false;
+		for (var id = 1; check === false;) {
+			if (yvalues[new_id].hasOwnProperty(id) === false) {
+				check = true;			}
+			if (yvalues[new_id].hasOwnProperty(id) === true) {
+				id++
+			}
+		}
+		yvalues[new_id][id] = valuesy;
 	}
 }
 		 
