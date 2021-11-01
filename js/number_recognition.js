@@ -36,6 +36,12 @@ function createnewdataset() {
 	for (var j = 0; j < y.length; j++) {
 		valuesy.push(y[j] - tly[0])
 	}
+	if (!valuesx) {
+		valuesx.push(0);
+	}
+	if (!valuesy) {
+		valuesy.push(0);
+	}
 }
 function reset() {
 	for (var i = 0; i < 10; i++) {
