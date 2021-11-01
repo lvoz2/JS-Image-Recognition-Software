@@ -75,12 +75,6 @@ window.load = function(url, type) {
 window.submit = function() {
 	var new_id = document.getElementById("new_layout").value;
 	createnewdataset()
-	if (xvalues.hasOwnProperty(new_id) === false) {
-		xvalues[new_id] = {'1': valuesx};
-	}
-	if (yvalues.hasOwnProperty(new_id) === false) {
-		yvalues[new_id] = {'1': valuesy};
-	}
 	if (xvalues.hasOwnProperty(new_id) === true) {
 		var check = false;
 		for (var id = 1; check === false;) {
@@ -102,6 +96,12 @@ window.submit = function() {
 			}
 		}
 		yvalues[new_id][id] = valuesy;
+	}
+	if (xvalues.hasOwnProperty(new_id) === false) {
+		xvalues[new_id] = {'1': valuesx};
+	}
+	if (yvalues.hasOwnProperty(new_id) === false) {
+		yvalues[new_id] = {'1': valuesy};
 	}
 }
 		 
