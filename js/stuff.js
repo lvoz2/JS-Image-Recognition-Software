@@ -75,7 +75,7 @@ window.load = function(url, type) {
 window.submit = function() {
 	var new_id = document.getElementById("new_layout").value;
 	createnewdataset()
-	if (xvalues[new_id]) {
+	if (xvalues.hasOwnProperty(new_id)) {
 	}
 }
 		 
