@@ -83,9 +83,11 @@ window.submit = function() {
 	}
 	var check = false;
 	if (xvalues.hasOwnProperty(new_id) === true) {
-		for (var id = 0; check === false; id++) {
+		for (var id = 1; check === false;) {
 			if (xvalues[new_id].hasOwnProperty(id) === false) {
-				check = true;
+				check = true;			}
+			if (xvalues[new_id].hasOwnProperty(id) === true) {
+				id++
 			}
 		}
 		console.log(id);
