@@ -86,6 +86,7 @@ window.submit = function() {
 		for (var id = 1; check === false; id++) {
 			if (xvalues[new_id].hasOwnProperty(id) === false) {
 				check = true;
+				id++
 			}
 		}
 		console.log(id);
