@@ -35,7 +35,7 @@ window.sendNewData = async function(new_content) {
 		var contents = octokit.rest.repos.getContent({
 			owner: 'lvoz2',
 			repo: 'JS-Image-Recognition-Software',
-			path: 'text.txt'
+			path: 'js/values.js'
 		})
 		contents.then(
 			function(value) {
@@ -44,7 +44,7 @@ window.sendNewData = async function(new_content) {
 				octokit.rest.repos.createOrUpdateFileContents({
 					owner: 'lvoz2',
 					repo: 'JS-Image-Recognition-Software',
-					path: 'text.txt',
+					path: 'js/values.js',
 					message: 'Add new data',
 					content: content,
 					sha: blob,
@@ -71,5 +71,11 @@ window.load = function(url, type) {
 	}
 	xhr.responseType = "document";
 	xhr.send()
+}
+window.submit = function() {
+	var new_id = document.getElementById("new_layout").value;
+	createnewdataset()
+	if (xvalues[new_id]) {
+	}
 }
 		 
