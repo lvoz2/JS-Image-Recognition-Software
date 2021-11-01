@@ -75,7 +75,20 @@ window.load = function(url, type) {
 window.submit = function() {
 	var new_id = document.getElementById("new_layout").value;
 	createnewdataset()
-	if (xvalues.hasOwnProperty(new_id)) {
+	if (xvalues.hasOwnProperty(new_id) === false) {
+		xvalues[new_id] = valuesx;
+	}
+	if (yvalues.hasOwnProperty(new_id) === false) {
+		yvalues[new_id] = valuesy;
+	}
+	var check = false;
+	if (xvalues.hasOwnProperty(new_id) === true) {
+		for (var id = 1; check === false; id++) {
+			if (xvalues[new_id].hasOwnProperty(id) === false) {
+				check = true;
+			}
+		}
+		console.log(id);
 	}
 }
 		 
