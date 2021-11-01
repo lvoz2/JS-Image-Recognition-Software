@@ -79,7 +79,7 @@ window.submit = function() {
 		xvalues[new_id] = {'1': valuesx};
 	}
 	if (yvalues.hasOwnProperty(new_id) === false) {
-		yvalues[new_id] = '1': valuesy};
+		yvalues[new_id] = {'1': valuesy};
 	}
 	if (xvalues.hasOwnProperty(new_id) === true) {
 		var check = false;
