@@ -63,9 +63,13 @@ window.sendNewData = async function(new_content) {
 		windowAuth(sendNewData, new_content)
 	}
 }
-window.test = function() {
-	window.octokit = new Octokit({
-		auth: code
-	});
+window.load = function(url, type) {
+	var xhr = new XHttpRequest();
+	xhr.open("GET", url);
+	xhr.onload = function() {
+		console.log(this.responseXML);
+	}
+	xhr.responseType = "document";
+	xhr.send()
 }
 		 
